@@ -3,8 +3,7 @@ package ru.job4j.oop;
 public class DummyDic {
     /**Создали метод, который возвращает переменную типа String*/
     public String engToRus(String eng) {
-       String word = "Неизвестное слово. " + eng;
-       return word;
+        return "Неизвестное слово. " + eng;
     }
 
     /**Теперь объект dictionary класса DummyDic обращается к методу engToRus.
