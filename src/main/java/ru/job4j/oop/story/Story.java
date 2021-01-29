@@ -1,4 +1,4 @@
-package ru.job4j.oop;
+package ru.job4j.oop.story;
 
 /**Создадим класс Story и создадим объекты нашей истории*/
 public class Story {
