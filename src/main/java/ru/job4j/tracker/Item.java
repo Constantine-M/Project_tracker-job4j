@@ -12,6 +12,30 @@ public class Item {
     private int id;
     private String name;
 
+    /**Создали конструктор без входных параметров*/
+    public Item() {
+
+    }
+
+    /**
+     * Создали конструктор с параметром id.
+     * @param id номер.
+     */
+    public Item(int id) {
+        this.id = id;
+    }
+
+    /**
+     * Методом перегрузки конструктора, создал
+     * новый конструктор уже с входным параметром.
+     * @param name имя объекта.
+     * @param id номер.
+     */
+    public Item(String name, int id) {
+        this.name = name;
+        this.id = id;
+    }
+
     /**Добавили геттер, чтобы получить доступ к полю created.*/
     public void getLocalDateTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm:ss");
