@@ -26,14 +26,12 @@ public class Engineer extends Profession {
         this.experience = experience;
     }
 
-    /**Пока не понимаю, как работает этот метод!
-     * Знаю, что в качестве аргумента выступает объект класса Alarm.
-     * А мы обращаемся к объекту класса Troubleshoot, но зачем?
-     * И что он фактически должен возвращать?
-     * Какой объект мы здесь должны создать?
+    /** Этот метод должен вернуть объект класса Troubleshoot.
+     * Приходит авария инженеру. Инженер ее решает
+     * и возвращает решение класса Troubleshoot.
      */
     public Troubleshoot crash(Alarm alarm) {
-        Troubleshoot trouble = new Troubleshoot();
-        return trouble;
+        Troubleshoot solution = new Troubleshoot();
+        return solution;
     }
 }
