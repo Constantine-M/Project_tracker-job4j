@@ -9,7 +9,7 @@ public class ReportUsage {
         String words = rept.generate("Report's name", "Report's body");
         System.out.println(words);
         JSONReport reply = new JSONReport();
-        String doklad = reply.generate("name : ", "body : ");
+        String doklad = reply.generate("name", "body");
         System.out.println(doklad);
     }
 }
