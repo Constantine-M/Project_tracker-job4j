@@ -8,5 +8,6 @@ public class StartUI {
         Item item = new Item();
         String dateTime = item.getLocalDateTime().format(formatter);
         System.out.println(dateTime);
+        System.out.println(item);
     }
 }
