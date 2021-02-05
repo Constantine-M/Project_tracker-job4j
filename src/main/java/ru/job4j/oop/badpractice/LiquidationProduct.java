@@ -5,6 +5,7 @@ package ru.job4j.oop.badpractice;
  */
 public final class LiquidationProduct {
     /**Создадим поле, в котором будет находиться объект Product.
+     * Продукт со скидкой является частью всех продуктов (класс Product).
      * Такой подход называется КОМПОЗИЦИЯ.
      */
     private Product product;
@@ -20,6 +21,13 @@ public final class LiquidationProduct {
         product = new Product(name, price);
     }
 
+    /**Создал геттер для вызова объекта класса Product.
+     * Это нужно, чтобы узнать, какой продукт оказался со скидкой (среди всех продуктов).
+     * @return объект класса Product.
+     */
+    public Product getProduct() {
+        return product;
+    }
     /**Мы переопределили метод (от метода родительского класса)
      * и написали так, чтобы скидка составляла 90%.
      * @return 90% скидка.

@@ -12,13 +12,12 @@ public class Shop {
      * @param name имя товара
      * @param price его цена
      * @return возвращает объект класса "продукт" с его именем и ценой
-     * После отключения наследования в данном методе уже, получается,
-     * не совсем корректно возвращать объект класса Product, т.к.
-     * нам ведь нужен объект другого класса...
+     * После отключения наследования в данном методе чтобы вывести объект класса
+     * LiquidationProduct, нам необходимо вызвать
      */
     public static Product of(String name, int price) {
         if ("Oil".equals(name)) {
-            return new LiquidationProduct(name, price);
+            return new LiquidationProduct(name, price).getProduct();
         }
         return new Product(name, price);
     }
