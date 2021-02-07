@@ -24,6 +24,7 @@ public class Shop {
         products[2] = new Product("Egg", 19);
         /**Проверим, что объект не равен null. Т.к. у нас массив не заполнен целиком.
          * Создали переменную product класса Product, чтобы в цикле чуть-чуть меньше писать.
+         * Здесь выпадает ошибка NPE. Нужно ли её сейчас править?
          */
         for (int index = 0; index < products.length; index++) {
             Product product = products[index];
