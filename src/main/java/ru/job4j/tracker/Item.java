@@ -2,6 +2,9 @@ package ru.job4j.tracker;
 
 import java.time.LocalDateTime;
 
+/**Данный класс описывает модель заявления.
+ * id - это уникальный номер.
+ */
 public class Item {
     /**Добавил поле типа LocalDateTime класса Item и сразу же
      * проинициализировал его датой и временем (текущим), используя
