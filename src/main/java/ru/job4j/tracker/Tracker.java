@@ -47,39 +47,36 @@ public class Tracker {
     /**
      * Данный метод позволяет получить список всех заявок.
      * @return возвращает массив без нулевых значений.
+     * P.S. Правка - метод можно прописать в одну строку
+     * (когда будешь по-новой смотреть, то знай, что тут был метод в 9 строк),
+     * т.к. size - является переменной поля. То есть, когда мы создаем заявку, то
+     * size уже != 0. И когда мы выводим все заявки, то мы как раз
+     * выводим size заявок из пула в 100 штук (это сколько мы зарезервировали).
      */
     public Item[] findAll() {
-        Item[] itemsWithoutNull = new Item[items.length];
-        int size = 0;
-        for (int i = 0; i < items.length; i++) {
-            Item item = items[i];
-            if (item != null) {
-                itemsWithoutNull[size] = item;
-                size++;
-            }
-        }
-        itemsWithoutNull = Arrays.copyOf(itemsWithoutNull, size);
-        return itemsWithoutNull;
+        return Arrays.copyOf(items, size);
     }
 
     /**
      * Проверяем все элементы массива items (все заявки) и сравниваем с нашим именем
      * (которое в качестве аргумента метода). Используя метод getName класса Item.
      * То что находим - записываем в результирующий массив.
+     * P.S. Доп.- по всему массиву проходить не нужно, ведь мы
+     * его заполняем на size заявок, поэтому достаточно вместо items.length
+     * использовать size.
      * @param key имя списка
      * @return список заявок/заявку по найденному имени
      */
     public Item[] findByName(String key) {
         Item[] copyFindName = new Item[items.length];
-        int size = 0;
-        for (int i = 0; i < items.length; i++) {
+        int number = 0;
+        for (int i = 0; i < size; i++) {
             Item item = items[i];
             if (item.getName().equals(key)) {
-                copyFindName[size] = item;
-                size++;
+                copyFindName[number] = item;
+                number++;
             }
         }
-        copyFindName = Arrays.copyOf(copyFindName, size);
-        return copyFindName;
+        return Arrays.copyOf(copyFindName, number);
     }
 }
