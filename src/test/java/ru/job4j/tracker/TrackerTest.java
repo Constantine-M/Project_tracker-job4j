@@ -1,7 +1,11 @@
 package ru.job4j.tracker;
 
 import org.junit.Test;
+
+import javax.sound.midi.Track;
+
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class TrackerTest {
@@ -26,5 +30,15 @@ public class TrackerTest {
         bugWithDesc.setName("Bug with descriptions");
         tracker.replace(id, bugWithDesc);
         assertThat(tracker.findById(id).getName(), is("Bug with descriptions"));
+    }
+
+    @Test
+    public void whenDelete() {
+        Tracker tracker = new Tracker();
+        Item bug = new Item();
+        bug.setName("Bug");
+        tracker.add(bug);
+        tracker.delete(1);
+        assertThat(tracker.findById(1), is(nullValue()));
     }
 }

@@ -113,4 +113,26 @@ public class Tracker {
         }
         return rsl;
     }
+
+    /**
+     * Данный метод удаляет заявку (объект) из массива заявок.
+     * Кол-во заявок size будет уменьшаться. Если size не уменьшить, то тест не пройдет.
+     * Чтобы убрать дыру в массиве в виде объекта null,
+     * мы использовали метод System.array().
+     * Метод System.arraycopy() может работать с одним массивом для source и dest.
+     * @param id номер заявки
+     * @return логическое ПРАВДА, если заявка удалилась, или ЛОЖЬ,
+     * если заявка не была найдена по id.
+     */
+    public boolean delete(int id) {
+        int indexToDel = indexOf(id);
+        if (indexToDel != -1) {
+            int start = indexToDel + 1;
+            items[indexToDel] = null;
+            System.arraycopy(items, start, items, indexToDel, size - indexToDel);
+            size--;
+            return true;
+        }
+        return false;
+    }
 }
