@@ -85,11 +85,14 @@ public class Tracker {
      * @param item объект (заявка)
      * @return новый объект на месте старой заявки
      * Создается объект item с id = 0. А нам нужно, чтобы id не менялся.
-     * P.P.S. Просто присвоил номер id.
+     * P.S. Просто присвоил номер id.
+     * P.P.S. Проверка параметров метода называется валидацией.
+     * if (index != -1) - это есть валидация.
      */
     public boolean replace(int id, Item item) {
         int index = indexOf(id);
-        if (index != -1) {
+        boolean rsl = index != -1;
+        if (rsl) {
             items[index] = item;
             item.setId(id);
             return true;
@@ -123,6 +126,8 @@ public class Tracker {
      * @param id номер заявки
      * @return логическое ПРАВДА, если заявка удалилась, или ЛОЖЬ,
      * если заявка не была найдена по id.
+     * P.S.А тут валидация есть. Просто она внутри условия и я бы хотел оставить так.
+     * Надеюсь, что это не преступление.
      */
     public boolean delete(int id) {
         int indexToDel = indexOf(id);
