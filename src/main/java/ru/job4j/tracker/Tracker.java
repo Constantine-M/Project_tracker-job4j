@@ -31,17 +31,14 @@ public class Tracker {
      * Если Item не найден - возвращает null.
      * @param id номер заявки
      * @return заявку с найденным номером или null.
+     * Доп - после того, как мы создали метод indexOf(), то методы
+     * findById и indexOf стали похожи - значит поиск по id можно
+     * упростить.
+     * Если индекс (с помощью метода) найден, то возвращаем item, иначе null.
      */
     public Item findById(int id) {
-        Item rslItem = null;
-        for (int index = 0; index < size; index++) {
-            Item item = items[index];
-            if (item.getId() == id) {
-                rslItem = item;
-                break;
-            }
-        }
-        return rslItem;
+        int index = indexOf(id);
+        return index != -1 ? items[index] : null;
     }
 
     /**
@@ -78,5 +75,42 @@ public class Tracker {
             }
         }
         return Arrays.copyOf(copyFindName, number);
+    }
+
+    /**
+     * Данный метод позволяет заменить заявки.
+     * Но сначала нам нужно найти ячейку, поэтому ниже прописали метод
+     * для нахождения номера ячейки (индекса).
+     * @param id номер заявки
+     * @param item объект (заявка)
+     * @return новый объект на месте старой заявки
+     * Создается объект item с id = 0. А нам нужно, чтобы id не менялся.
+     * P.P.S. Просто присвоил номер id.
+     */
+    public boolean replace(int id, Item item) {
+        int index = indexOf(id);
+        if (index != -1) {
+            items[index] = item;
+            item.setId(id);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Данный метод возвращает индекс заявки, когда мы ищем завяку по номеру id.
+     * Метод объявлен как private, потому что он используется только внутри системы.
+     * @param id номер заявки
+     * @return индекс заявки в массиве
+     */
+    private int indexOf(int id) {
+        int rsl = -1;
+        for (int i = 0; i < size; i++) {
+            if (items[i].getId() == id) {
+                rsl = i;
+                break;
+            }
+        }
+        return rsl;
     }
 }
