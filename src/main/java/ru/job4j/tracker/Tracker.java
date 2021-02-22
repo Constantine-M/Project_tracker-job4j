@@ -91,7 +91,7 @@ public class Tracker {
      */
     public boolean replace(int id, Item item) {
         int index = indexOf(id);
-        boolean rsl = index != -1;
+        boolean rsl = index != -1 && items[index] != null;
         if (rsl) {
             items[index] = item;
             item.setId(id);
@@ -131,7 +131,7 @@ public class Tracker {
      */
     public boolean delete(int id) {
         int indexToDel = indexOf(id);
-        if (indexToDel != -1) {
+        if (indexToDel != -1 && items[indexToDel] != null) {
             int start = indexToDel + 1;
             items[indexToDel] = null;
             System.arraycopy(items, start, items, indexToDel, size - indexToDel);

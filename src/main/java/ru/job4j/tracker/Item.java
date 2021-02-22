@@ -38,6 +38,15 @@ public class Item {
         this.id = id;
     }
 
+    /**
+     * Методом перегрузки параметров создали конструктор с
+     * входным параметром name.
+     * @param name имя заявки
+     */
+    public Item(String name) {
+        this.name = name;
+    }
+
     /**Добавили геттер, чтобы получить доступ к полю created.*/
     public LocalDateTime getLocalDateTime() {
         return created;
