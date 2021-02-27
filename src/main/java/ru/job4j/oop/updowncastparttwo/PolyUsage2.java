@@ -18,5 +18,15 @@ public class PolyUsage2 {
         for (Anima anima : animals) {
             anima.sound();
         }
+        System.out.println();
+        Vehicle maize = new Airplane();
+        Vehicle lastochka = new Train();
+        Vehicle bus = new Bus();
+        
+        Vehicle[] transports = new Vehicle[] {maize, lastochka, bus};
+        for (Vehicle trans : transports) {
+            trans.move();
+            trans.sound();
+        }
     }
 }
