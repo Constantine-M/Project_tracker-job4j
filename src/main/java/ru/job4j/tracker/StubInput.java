@@ -1,17 +1,25 @@
 package ru.job4j.tracker;
 
 /**
- * implements Input - эта строчка заставляет нас в классе StubInput создать те же методы,
- * что и в интерфейсе Input и добавить в них реализацию.
+ * Доработаем этот класс так, чтобы метод askStr возвращал параметры, которые мы хотим.
+ * Это нужно для написания тестов.
+ * Добавим в этот класс поле с вариантами ответов пользователя.
  */
 public class StubInput implements Input {
+    private String[] answers;
+    private int position = 0;
+
+    public StubInput(String[] answers) {
+        this.answers = answers;
+    }
+
     @Override
     public String askStr(String question) {
-        return null;
+        return answers[position++];
     }
 
     @Override
     public int askInt(String question) {
-        return 0;
+        return Integer.parseInt(askStr(question));
     }
 }
