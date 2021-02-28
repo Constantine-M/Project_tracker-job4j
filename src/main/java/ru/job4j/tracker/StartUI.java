@@ -2,6 +2,10 @@ package ru.job4j.tracker;
 
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Данный класс используется для отображения
+ * взаимодействия пользователя и программы.
+ */
 public class StartUI {
     /**
      * Данный метод отвечает за вывод меню.
@@ -17,55 +21,22 @@ public class StartUI {
             int select = input.askInt("Select: ");
             switch (select) {
                 case 0:
-                    System.out.println("==== Create a new Item ====");
-                    String name = input.askStr("Enter name: ");
-                    Item item = new Item(name);
-                    tracker.add(item);
+                    StartUI.createItem(input, tracker);
                     break;
                 case 1:
-                    System.out.println("==== Create complete list ====");
-                    Item[] list = tracker.findAll();
-                    for (Item records : list) {
-                        System.out.println(records);
-                    }
+                    StartUI.findAllItems(tracker);
                     break;
                 case 2:
-                    int id = input.askInt("Enter record ID: ");
-                    String recName = input.askStr("New record name: ");
-                    Item newRec = new Item(recName);
-                    if (tracker.replace(id, newRec)) {
-                        System.out.println("==== Replacement successful ====");
-                    } else {
-                        System.out.println("==== Record ID not found ====");
-                    }
+                    StartUI.replaceItem(input, tracker);
                     break;
                 case 3:
-                    int idToDel = input.askInt("Enter record ID: ");
-                    if (tracker.delete(idToDel)) {
-                        System.out.println("==== Record removed successfully ====");
-                    } else {
-                        System.out.println("==== Record ID not found ====");
-                    }
+                    StartUI.deleteItem(input, tracker);
                     break;
                 case 4:
-                    int idToFind = input.askInt("Enter record ID: ");
-                    Item findRec = tracker.findById(idToFind);
-                    if (findRec != null) {
-                        System.out.println(findRec);
-                    } else {
-                        System.out.println("==== Record with such id not found ====");
-                    }
+                    StartUI.findItemByIds(input, tracker);
                     break;
                 case 5:
-                    String nameRec = input.askStr("Enter record name: ");
-                    Item[] records = tracker.findByName(nameRec);
-                    if (records.length > 0) {
-                        for (Item recs : records) {
-                            System.out.println(recs);
-                        }
-                    } else {
-                        System.out.println("==== Records with such name not found ====");
-                    }
+                    StartUI.findItemByName(input, tracker);
                     break;
                 case 6:
                     System.out.println("==== Shutting down ====");
@@ -85,10 +56,66 @@ public class StartUI {
         System.out.println("5. Find items by name");
         System.out.println("6. Exit Program");
     }
+    /**Вызов статического метода. Обращаемся через класс.*/
+    public static void createItem(Input input, Tracker tracker) {
+        System.out.println("==== Create a new Item ====");
+        String name = input.askStr("Enter name: ");
+        Item item = new Item(name);
+        tracker.add(item);
+    }
 
+    public static void findAllItems(Tracker tracker) {
+        System.out.println("==== Create complete list ====");
+        Item[] list = tracker.findAll();
+        for (Item records : list) {
+            System.out.println(records);
+        }
+    }
+
+    public static void replaceItem(Input input, Tracker tracker) {
+        int id = input.askInt("Enter record ID: ");
+        String recName = input.askStr("New record name: ");
+        Item newRec = new Item(recName);
+        if (tracker.replace(id, newRec)) {
+            System.out.println("==== Replacement successful ====");
+        } else {
+            System.out.println("==== Record ID not found ====");
+        }
+    }
+
+    public static void deleteItem(Input input, Tracker tracker) {
+        int idToDel = input.askInt("Enter record ID: ");
+        if (tracker.delete(idToDel)) {
+            System.out.println("==== Record removed successfully ====");
+        } else {
+            System.out.println("==== Record ID not found ====");
+        }
+    }
+
+    public static void findItemByIds(Input input, Tracker tracker) {
+        int idToFind = input.askInt("Enter record ID: ");
+        Item findRec = tracker.findById(idToFind);
+        if (findRec != null) {
+            System.out.println(findRec);
+        } else {
+            System.out.println("==== Record with such id not found ====");
+        }
+    }
+    public static void findItemByName(Input input, Tracker tracker) {
+        String nameRec = input.askStr("Enter record name: ");
+        Item[] records = tracker.findByName(nameRec);
+        if (records.length > 0) {
+            for (Item recs : records) {
+                System.out.println(recs);
+            }
+        } else {
+            System.out.println("==== Records with such name not found ====");
+        }
+    }
     public static void main(String[] args) {
         Input input = new ConsoleInput();
         Tracker tracker = new Tracker();
+        /**Вызов не статического метода. Необходимо обратиться через объект.*/
         new StartUI().init(input, tracker);
     }
 }
