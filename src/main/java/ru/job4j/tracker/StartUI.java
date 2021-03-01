@@ -73,6 +73,7 @@ public class StartUI {
     }
 
     public static void replaceItem(Input input, Tracker tracker) {
+        System.out.println("==== Update item ====");
         int id = input.askInt("Enter record ID: ");
         String recName = input.askStr("New record name: ");
         Item newRec = new Item(recName);
@@ -84,6 +85,7 @@ public class StartUI {
     }
 
     public static void deleteItem(Input input, Tracker tracker) {
+        System.out.println("==== Remove process ====");
         int idToDel = input.askInt("Enter record ID: ");
         if (tracker.delete(idToDel)) {
             System.out.println("==== Record removed successfully ====");

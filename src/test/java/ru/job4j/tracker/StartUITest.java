@@ -2,9 +2,8 @@ package ru.job4j.tracker;
 
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 public class StartUITest {
 
@@ -38,5 +37,41 @@ public class StartUITest {
         Item created = tracker.findAll()[0];
         Item expected = new Item("FX PC");
         assertThat(created.getName(), is(expected.getName()));
+    }
+
+    /**
+     * 1. Создаем объект tracker.
+     * 2. Создаем объект item.
+     * 3. Добавляем item в tracker. После этой операции у нас есть id.
+     * 4. Достаем item.id и создаем массив с ответами пользователя.
+     * 5. Вызываем тестируемый метод replaceItem. Это действие изменит состояние объекта tracker.
+     * 6. Ищем по item.id замененный item в объекте tracker.
+     * 7. Сравниваем имя найденной заявки с ожидаемой.
+     */
+    @Test
+    public void whenReplaceItem() {
+        Tracker tracker = new Tracker();
+        Item item = new Item("new Item");
+        tracker.add(item);
+        String[] answers = {
+                String.valueOf(item.getId()),
+                "replaced Item"
+        };
+        StartUI.replaceItem(new StubInput(answers), tracker);
+        Item replaced = tracker.findById(item.getId());
+        assertThat(replaced.getName(), is("replaced Item"));
+    }
+
+    @Test
+    public void whenDeleteItem() {
+        Tracker tracker = new Tracker();
+        Item item = new Item("new Item");
+        tracker.add(item);
+        String[] answer = {
+                String.valueOf(item.getId())
+        };
+        StartUI.deleteItem(new StubInput(answer), tracker);
+        Item deleted = tracker.findById(item.getId());
+        assertThat(deleted, is(nullValue()));
     }
 }
