@@ -14,12 +14,9 @@ public class StartUITest {
         Input input = new StubInput(answers);
         Tracker tracker = new Tracker();
         StartUI.createItem(input, tracker);
-        /**Здесь нужно как-то записать созданный объект в переменную класса Item.
-         * Я не знаю как, потому что сам метод ничего не возвращает.*/
-        /**А если сравнивать, то сравнивать с пустой ячейкой (чтоб понять, что заявка создалась)
-         * или же сравнивать по имени как в следующем методе*/
-        /**Кажется, что этот тест копирует следующий тест.*/
-        assertThat(Item item, is(notNullValue()));
+        Item created = tracker.findAll()[0];
+        Item expected = new Item("Consta");
+        assertThat(created.getName(), is(expected.getName()));
 
     }
 
