@@ -13,12 +13,14 @@ public class StartUI {
      * @param input для ввода информации (реализация через интерфейс)
      * @param tracker объект класса Tracker для манипуляций с заявками
      */
-    public void init(Input input, Tracker tracker) {
+    public void init(Input input, Tracker tracker, UserAction[] actions) {
         boolean run = true;
         while (run) {
-            this.showMenu();
+            this.showMenu(actions);
             /**Вводим пункт меню от 0 до 6*/
             int select = input.askInt("Select: ");
+            UserAction action = actions[select];
+            run = action.execute(input, tracker);
             switch (select) {
                 case 0:
                     StartUI.createItem(input, tracker);
