@@ -70,11 +70,11 @@ public class StartUITest {
     /**@Test
     public void whenReplaceItem() {
         Input in = new StubInput(
-                new String[] {"0", "Item name", "1", "1", "Replaced Item", "2"}
+                new String[] {"0", String.valueOf(item.getId()), "Replaced Item", "1"}
         );
         Tracker tracker = new Tracker();
+        Item item = tracker.add(new Item("Replaced Item"));
         UserAction[] actions = {
-                new CreateAction(),
                 new ReplaceAction(),
                 new ExitAction()
         };
