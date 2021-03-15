@@ -5,8 +5,15 @@ import java.time.format.DateTimeFormatter;
 /**
  * Данный класс используется для отображения
  * взаимодействия пользователя и программы.
+ * Разрывая зависимость от System.out, вносим изменения с помощью конструктора (интерфейс Output).
  */
 public class StartUI {
+    private final Output out;
+
+    public StartUI(Output out) {
+        this.out = out;
+    }
+
     /**
      * Данный метод отвечает за вывод меню.
      *
@@ -42,11 +49,12 @@ public class StartUI {
      * и, тем самым, улучшения гибкости программы.
      */
     public static void main(String[] args) {
+        Output output = new ConsoleOutput();
         Input input = new ConsoleInput();
         Tracker tracker = new Tracker();
         /**Создаем массив с действиями*/
         UserAction[] actions = {
-                new CreateAction(),
+                new CreateAction(output),
                 new FindAllAction(),
                 new ReplaceAction(),
                 new DeleteAction(),
@@ -55,6 +63,6 @@ public class StartUI {
                 new ExitAction()
         };
         /**Вызов не статического метода. Необходимо обратиться через объект.*/
-        new StartUI().init(input, tracker, actions);
+        new StartUI(output).init(input, tracker, actions);
     }
 }
