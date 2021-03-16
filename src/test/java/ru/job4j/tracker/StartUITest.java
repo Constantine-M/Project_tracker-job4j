@@ -25,14 +25,15 @@ public class StartUITest {
                 {"0"});
         Tracker tracker = new Tracker();
         UserAction[] actions = {
-                new ExitAction()
+                new ExitAction(out)
         };
         new StartUI(out).init(input, tracker, actions);
         assertThat(out.toString(), is(
                 "Menu." + System.lineSeparator() +
-                        "0. Exit" + System.lineSeparator()
+                        "0.Exit program" + System.lineSeparator()
         ));
     }
+
     /**
      * Для понимания, как написан тест.
      * "0", "Item name", "1" - эта строка есть алгоритм действий.

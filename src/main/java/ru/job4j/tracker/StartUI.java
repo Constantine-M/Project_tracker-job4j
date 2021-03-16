@@ -8,8 +8,15 @@ import java.time.format.DateTimeFormatter;
  * Разрывая зависимость от System.out, вносим изменения с помощью конструктора (интерфейс Output).
  */
 public class StartUI {
+    /**
+     * Создали переменную поля в виде объекта.
+     */
     private final Output out;
 
+    /**
+     * Общий (на все приложение) объект класса Output будем внедрять через конструктор.
+     * @param out объект, который нужно вывести на консоль
+     */
     public StartUI(Output out) {
         this.out = out;
     }
@@ -60,7 +67,7 @@ public class StartUI {
                 new DeleteAction(),
                 new FindByIDAction(),
                 new FindByNameAction(),
-                new ExitAction()
+                new ExitAction(output)
         };
         /**Вызов не статического метода. Необходимо обратиться через объект.*/
         new StartUI(output).init(input, tracker, actions);
