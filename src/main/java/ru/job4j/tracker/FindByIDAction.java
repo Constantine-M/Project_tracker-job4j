@@ -28,9 +28,9 @@ public class FindByIDAction implements UserAction {
         int idToFind = input.askInt("Enter record ID: ");
         Item findRec = tracker.findById(idToFind);
         if (findRec != null) {
-            System.out.println(findRec);
+            output.println(findRec);
         } else {
-            System.out.println("==== Record with such id not found ====");
+            output.println("==== Record with such id not found ====");
         }
         return true;
     }

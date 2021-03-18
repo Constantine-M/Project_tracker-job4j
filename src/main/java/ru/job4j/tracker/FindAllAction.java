@@ -25,10 +25,10 @@ public class FindAllAction implements UserAction {
 
     @Override
     public boolean execute(Input input, Tracker tracker) {
-        System.out.println("==== Create complete list ====");
+        output.println("==== Create complete list ====");
         Item[] list = tracker.findAll();
         for (Item records : list) {
-            System.out.println(records);
+            output.println(records);
         }
         return true;
     }

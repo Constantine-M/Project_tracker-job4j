@@ -25,12 +25,12 @@ public class DeleteAction implements UserAction {
 
     @Override
     public boolean execute(Input input, Tracker tracker) {
-        System.out.println("==== Removal process ====");
+        out.println("==== Removal process ====");
         int idToDel = input.askInt("Enter record ID: ");
         if (tracker.delete(idToDel)) {
-            System.out.println("==== Record removed successfully ====");
+            out.println("==== Record removed successfully ====");
         } else {
-            System.out.println("==== Record ID not found ====");
+            out.println("==== Record ID not found ====");
         }
         return true;
     }

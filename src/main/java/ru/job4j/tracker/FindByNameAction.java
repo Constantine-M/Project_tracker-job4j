@@ -29,10 +29,10 @@ public class FindByNameAction implements UserAction {
         Item[] records = tracker.findByName(nameRec);
         if (records.length > 0) {
             for (Item recs : records) {
-                System.out.println(recs);
+                output.println(recs);
             }
         } else {
-            System.out.println("==== Records with such name not found ====");
+                output.println("==== Records with such name not found ====");
         }
         return true;
     }
