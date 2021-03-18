@@ -62,11 +62,11 @@ public class StartUI {
         /**Создаем массив с действиями*/
         UserAction[] actions = {
                 new CreateAction(output),
-                new FindAllAction(),
-                new ReplaceAction(),
-                new DeleteAction(),
-                new FindByIDAction(),
-                new FindByNameAction(),
+                new FindAllAction(output),
+                new ReplaceAction(output),
+                new DeleteAction(output),
+                new FindByIDAction(output),
+                new FindByNameAction(output),
                 new ExitAction(output)
         };
         /**Вызов не статического метода. Необходимо обратиться через объект.*/
