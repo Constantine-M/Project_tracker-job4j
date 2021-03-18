@@ -1,6 +1,7 @@
 package ru.job4j.tracker;
 
 import org.junit.Test;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -45,17 +46,18 @@ public class StartUITest {
      * эмулируем ввод пользователя. То есть именно в таком порядке он будет выбирать пункт (создание),
      * называть элемент и выбирать 1 для выхода.
      */
-    /**@Test
+    @Test
     public void whenCreateItem() {
+        Output out = new StubOutput();
         Input in = new StubInput(
                 new String[] {"0", "Item name", "1"}
                 );
         Tracker tracker = new Tracker();
         UserAction[] actions = {
-                new CreateAction(),
-                new ExitAction()
+                new CreateAction(out),
+                new ExitAction(out)
         };
-        new StartUI().init(in, tracker, actions);
+        new StartUI(out).init(in, tracker, actions);
         assertThat(tracker.findAll()[0].getName(), is("Item name"));
     }
 
@@ -68,51 +70,86 @@ public class StartUITest {
      * (in, tracker, actions), которые описывают ввод, методы над заявками и действиям (ввиду использования интерфейса)
      * 5. Сравниваем имя найденной заявки с ожидаемой.
      */
-    /**@Test
+    @Test
     public void whenReplaceItem() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Item item = tracker.add(new Item("Replaced Item"));
         Input in = new StubInput(
                 new String[] {"0", String.valueOf(item.getId()), "Replaced Item", "1"}
         );
-        Tracker tracker = new Tracker();
-        Item item = tracker.add(new Item("Replaced Item"));
         UserAction[] actions = {
-                new ReplaceAction(),
-                new ExitAction()
+                new ReplaceAction(out),
+                new ExitAction(out)
         };
-        new StartUI().init(in, tracker, actions);
+        new StartUI(out).init(in, tracker, actions);
         assertThat(tracker.findAll()[0].getName(), is("Replaced Item"));
     }
 
     @Test
     public void whenDeleteItem() {
+        Output out = new StubOutput();
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("Deleted Item"));
         Input in = new StubInput(new String[]
                 {"0", String.valueOf(item.getId()), "1"}
         );
         UserAction[] actions = {
-                new DeleteAction(),
-                new ExitAction()
+                new DeleteAction(out),
+                new ExitAction(out)
         };
-        new StartUI().init(in, tracker, actions);
+        new StartUI(out).init(in, tracker, actions);
         assertThat(tracker.findById(item.getId()), is(nullValue()));
     }
 
     /**
      * Тест максимально поход на создание заявки.
      */
-    /**@Test
+    @Test
     public void whenFindAllItems() {
+        Output out = new StubOutput();
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("FX PC find all"));
         Input in = new StubInput(new String[]
                 {"0", "1"}
                 );
         UserAction[] actions = {
-                new FindAllAction(),
-                new ExitAction()
+                new FindAllAction(out),
+                new ExitAction(out)
         };
-        new StartUI().init(in, tracker, actions);
+        new StartUI(out).init(in, tracker, actions);
         assertThat(tracker.findAll()[0].getName(), is("FX PC find all"));
-    }*/
+    }
+
+    @Test
+    public void whenFindById() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Item item = tracker.add(new Item("Consta"));
+        Input in = new StubInput(new String[]
+                {"0", String.valueOf(item.getId()), "1"}
+                );
+        UserAction[] actions = {
+                new FindByIDAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        assertThat(tracker.findAll()[0].getName(), is("Consta"));
+    }
+
+    @Test
+    public void whenFindByName() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Item item = tracker.add(new Item("Consta"));
+        Input in = new StubInput(new String[]
+                {"0", item.getName(), "1"}
+                );
+        UserAction[] actions = {
+                new FindByNameAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        assertThat(tracker.findAll()[0].getName(), is("Consta"));
+    }
 }
