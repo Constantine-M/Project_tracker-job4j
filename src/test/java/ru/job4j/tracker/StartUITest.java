@@ -123,7 +123,7 @@ public class StartUITest {
                         "0.Find all Items" + System.lineSeparator() +
                         "1.Exit program" + System.lineSeparator() +
                         "==== Create complete list ====" + System.lineSeparator() +
-                        item.toString() + System.lineSeparator() +
+                        item + System.lineSeparator() +
                         "Menu." + System.lineSeparator() +
                         "0.Find all Items" + System.lineSeparator() +
                         "1.Exit program" + System.lineSeparator()
@@ -147,7 +147,7 @@ public class StartUITest {
                 "Menu." + System.lineSeparator() +
                         "0.Find Item by ID" + System.lineSeparator() +
                         "1.Exit program" + System.lineSeparator() +
-                        item.toString() + System.lineSeparator() +
+                        item + System.lineSeparator() +
                         "Menu." + System.lineSeparator() +
                         "0.Find Item by ID" + System.lineSeparator() +
                         "1.Exit program" + System.lineSeparator()
@@ -171,7 +171,7 @@ public class StartUITest {
                 "Menu." + System.lineSeparator() +
                         "0.Find Item by name" + System.lineSeparator() +
                         "1.Exit program" + System.lineSeparator() +
-                        item.toString() + System.lineSeparator() +
+                        item + System.lineSeparator() +
                         "Menu." + System.lineSeparator() +
                         "0.Find Item by name" + System.lineSeparator() +
                         "1.Exit program" + System.lineSeparator()
