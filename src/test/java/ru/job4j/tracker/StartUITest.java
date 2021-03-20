@@ -118,7 +118,16 @@ public class StartUITest {
                 new ExitAction(out)
         };
         new StartUI(out).init(in, tracker, actions);
-        assertThat(tracker.findAll()[0].getName(), is("FX PC find all"));
+        assertThat(out.toString(), is(
+                "Menu." + System.lineSeparator() +
+                        "0.Find all Items" + System.lineSeparator() +
+                        "1.Exit program" + System.lineSeparator() +
+                        "==== Create complete list ====" + System.lineSeparator() +
+                        item.toString() + System.lineSeparator() +
+                        "Menu." + System.lineSeparator() +
+                        "0.Find all Items" + System.lineSeparator() +
+                        "1.Exit program" + System.lineSeparator()
+        ));
     }
 
     @Test
@@ -134,7 +143,15 @@ public class StartUITest {
                 new ExitAction(out)
         };
         new StartUI(out).init(in, tracker, actions);
-        assertThat(tracker.findAll()[0].getName(), is("Consta"));
+        assertThat(out.toString(), is(
+                "Menu." + System.lineSeparator() +
+                        "0.Find Item by ID" + System.lineSeparator() +
+                        "1.Exit program" + System.lineSeparator() +
+                        item.toString() + System.lineSeparator() +
+                        "Menu." + System.lineSeparator() +
+                        "0.Find Item by ID" + System.lineSeparator() +
+                        "1.Exit program" + System.lineSeparator()
+        ));
     }
 
     @Test
@@ -150,6 +167,14 @@ public class StartUITest {
                 new ExitAction(out)
         };
         new StartUI(out).init(in, tracker, actions);
-        assertThat(tracker.findAll()[0].getName(), is("Consta"));
+        assertThat(out.toString(), is(
+                "Menu." + System.lineSeparator() +
+                        "0.Find Item by name" + System.lineSeparator() +
+                        "1.Exit program" + System.lineSeparator() +
+                        item.toString() + System.lineSeparator() +
+                        "Menu." + System.lineSeparator() +
+                        "0.Find Item by name" + System.lineSeparator() +
+                        "1.Exit program" + System.lineSeparator()
+        ));
     }
 }
