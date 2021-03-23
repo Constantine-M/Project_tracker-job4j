@@ -1,21 +1,28 @@
 package ru.job4j.ex;
 
 public class UserStore {
+    /**
+     * Метод проходит по списку и ищет пользователя.
+     * @param users список юзеров
+     * @param login имя юзера, которого нужно найти
+     * @throws UserNotFoundException выбрасывается, когда НЕ НАХОДИМ СОВСЕМ юзера
+     */
     public static User findUser(User[] users, String login) throws UserNotFoundException {
-        User user = null;
         for (int i = 0; i < users.length; i++) {
             if (users[i].getUsername().equals(login)) {
-                user = users[i];
-                break;
-            } else {
+                return users[i];
+            } else if(users[i].getUsername() == null) {
                 throw new UserNotFoundException("User not found");
             }
         }
-        return user;
+        return null;
     }
 
+    /**
+     * Чтобы не городить false, достаточно использовать "!" здесь - !user.isValid().
+     */
     public static boolean validate(User user) throws UserInvalidException {
-        if (user.isValid() == false || user.getUsername().length() < 3) {
+        if (!user.isValid() || user.getUsername().length() < 3) {
             throw new UserInvalidException("User invalid");
         }
         return true;
@@ -34,7 +41,9 @@ public class UserStore {
      */
     public static void main(String[] args) {
         User[] users = {
-                new User("Consta", true)
+                new User(null, true),
+                new User("Petr", true),
+                new User("Mezenin", false)
         };
         try {
             User user = findUser(users, "Consta");
