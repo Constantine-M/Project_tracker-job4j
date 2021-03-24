@@ -177,4 +177,34 @@ public class StartUITest {
                         "1.Exit program" + System.lineSeparator()
         ));
     }
+
+    /**
+     * Данный тест показывает работу сценария, когда пользователь
+     * вводит неправильный пункт меню, а именно тот пункт, которого нет в списке.
+     * 1. Сначала программа отображает меню и предлагает выбор.
+     * 2.Мы вводим номер пункта из списка доступных действий.
+     * 3.Если неверно, то "Wrong input, you can select: 0 .. 0".
+     * 4.Возвращаемся к списку.
+     * 5.Выбираем правильный пункт.
+     */
+    @Test
+    public void whenInvalidExit() {
+        Output out = new StubOutput();
+        Input input = new StubInput(new String[]
+                {"2", "0"}
+                );
+        Tracker tracker = new Tracker();
+        UserAction[] actions = {
+                new ExitAction(out)
+        };
+        String ln = System.lineSeparator();
+        new StartUI(out).init(input, tracker, actions);
+        assertThat(out.toString(), is(
+                "Menu." + ln +
+                        "0.Exit program" + ln +
+                                "Wrong input, you can select: 0 .. 0" + ln +
+                        "Menu." + ln +
+                        "0.Exit program" + ln
+        ));
+    }
 }
