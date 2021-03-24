@@ -5,18 +5,22 @@ public class UserStore {
      * Метод проходит по списку и ищет пользователя.
      * @param users список юзеров
      * @param login имя юзера, которого нужно найти
-     * @throws UserNotFoundException выбрасывается, когда НЕ НАХОДИМ СОВСЕМ юзера
+     * @throws UserNotFoundException можно прописать вместо return, т.е.
+     * return совсем не нужен.
+     * В итоге получим: либо в списке мы находим юзера и он определяется/выводится,
+     * либо вылетает исключение "User not found".
      */
     public static User findUser(User[] users, String login) throws UserNotFoundException {
+        User user = null;
         for (int i = 0; i < users.length; i++) {
             if (users[i].getUsername().equals(login)) {
-                return users[i];
-            } else if(users[i].getUsername() == null) {
-                throw new UserNotFoundException("User not found");
+                user = users[i];
+                return user;
             }
         }
-        return null;
+        throw new UserNotFoundException("User not found");
     }
+
 
     /**
      * Чтобы не городить false, достаточно использовать "!" здесь - !user.isValid().
@@ -41,12 +45,12 @@ public class UserStore {
      */
     public static void main(String[] args) {
         User[] users = {
-                new User(null, true),
+                new User("Const", true),
                 new User("Petr", true),
                 new User("Mezenin", false)
         };
         try {
-            User user = findUser(users, "Consta");
+            User user = findUser(users, "Mezenin");
             if (validate(user)) {
                 System.out.println("This user has an access");
             }
