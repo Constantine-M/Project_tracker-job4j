@@ -33,11 +33,29 @@ public class ValidateInput implements Input {
         boolean invalid = true;
         int value = -1;
         do {
-            String rsl = in.askStr(question);
+            try {
+                value = in.askInt(question);
+                invalid = false;
+            } catch (NumberFormatException nfe) {
+                System.out.println("Please enter validate data again.");
+            }
+            /**
+             * С консоли вводим значение, а затем его приводим к числу с помощью метода parseInt().
+             * Данный метод может бросить исключение класса NumberFormatException.
+             * Поэтому добавили в наш метод проверку, что введенная строка содержит только числа.
+             * Я ЗАКОММЕНТИРОВАЛ КОД НИЖЕ, ПОТОМУ ЧТО
+             * В нашем случае мы сначала вводим значение с консоли, потом проверяем его, что оно не содержит буквенных
+             * символов и потом передаем его в метод parseInt(), который все равно дополнительно выполнит эту
+             * проверку - т.е. мы валидацию введенного параметра выполним два раза.
+             * Именно поэтому стоит отдавать предпочтение обработке исключения.
+             */
+                /**String rsl = in.askStr(question);
             if (!isNumber(rsl)) {
                 out.println("Please enter validate data again.");
                 continue;
             }
+            value = Integer.parseInt(rsl);
+            invalid = false;*/
         } while (invalid);
         return value;
     }
