@@ -47,9 +47,11 @@ public class ValidateInputTest {
                 new String[] {"0", "1"}
         );
         ValidateInput input = new ValidateInput(out, in);
-        int selected = input.askInt("Enter menu:");
+        int first = input.askInt("Enter menu:");
+        int second = input.askInt("Enter menu:");
+        int[] result = {first, second};
         int[] expected = {0, 1};
-        assertThat(selected, is(expected));
+        assertThat(result, is(expected));
     }
 
     @Test
