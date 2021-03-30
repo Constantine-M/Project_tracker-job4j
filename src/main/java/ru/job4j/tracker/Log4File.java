@@ -26,13 +26,19 @@ public final class Log4File {
 
     }
 
-    public static void getInstance() {
+    /**
+     * С помощью ключевого слова static мы привязываем поле к классу.
+     * Благодаря этому мы можем сохранить ссылку на объект класса.
+     * @return возвращает объект instance класса Log4File.
+     */
+    public static Log4File getInstance() {
         if(instance == null) {
             instance = new Log4File();
         }
+        return instance;
     }
 
-    private void add(String message) {
+    public void add(String message) {
         messages[++index] = message;
     }
 

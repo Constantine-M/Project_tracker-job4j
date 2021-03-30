@@ -60,6 +60,12 @@ public class StartUI {
      * и, тем самым, улучшения гибкости программы.
      */
     public static void main(String[] args) {
+        /**
+         * Создаем объект класса Log4File и получаем его методы.
+         */
+        Log4File log = Log4File.getInstance();
+        log.add("New Item");
+        log.save();
         Output output = new ConsoleOutput();
         Input input = new ValidateInput(output, new ConsoleInput());
         Tracker tracker = new Tracker();
