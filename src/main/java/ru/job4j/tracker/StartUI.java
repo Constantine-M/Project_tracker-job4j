@@ -60,9 +60,7 @@ public class StartUI {
      * и, тем самым, улучшения гибкости программы.
      */
     public static void main(String[] args) {
-        /**
-         * Создаем объект класса Log4File и получаем его методы.
-         */
+        /**Создаем объект класса Log4File и получаем его методы.*/
         Log4File log = Log4File.getInstance();
         log.add("New Item");
         log.save();

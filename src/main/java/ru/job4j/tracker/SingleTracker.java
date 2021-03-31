@@ -6,12 +6,27 @@ package ru.job4j.tracker;
  */
 public final class SingleTracker {
     /** Создал объект класса Tracker в качестве переменной поля. */
-    private static Tracker tracker = new Tracker();
-    /** Создал объект внутри класса SingleTracker. */
-    private static SingleTracker stracker = new SingleTracker();
+    private static Tracker tracker;
+    /**
+     * Создал объект внутри класса SingleTracker.
+     * Поле для хранения объекта-одиночки должно быть объявлено статичным.
+     */
+    private static SingleTracker instance = null;
 
     private SingleTracker() {
 
+    }
+
+    /**
+     * Основной статический метод (public) одиночки служит альтернативой
+     * конструктору и является точкой доступа к экземпляру этого класса.
+     * @return объект класса SingleTracker
+     */
+    public static SingleTracker getInstance() {
+        if (instance == null) {
+            SingleTracker.instance = new SingleTracker();
+        }
+        return SingleTracker.instance;
     }
 
     /**
@@ -24,22 +39,27 @@ public final class SingleTracker {
         return tracker.add(item);
     }
 
+    /** Данный метод клиенты будут запускать через полученный объект одиночки.*/
     public Item findById(int id) {
         return tracker.findById(id);
     }
 
+    /** Данный метод клиенты будут запускать через полученный объект одиночки.*/
     public Item[] findAll() {
         return tracker.findAll();
     }
 
+    /** Данный метод клиенты будут запускать через полученный объект одиночки.*/
     public Item[] findByName(String key) {
         return tracker.findByName(key);
     }
 
+    /** Данный метод клиенты будут запускать через полученный объект одиночки.*/
     public boolean replace(Item item, int id) {
         return tracker.replace(id, item);
     }
 
+    /** Данный метод клиенты будут запускать через полученный объект одиночки.*/
     public boolean delete(int id) {
         return tracker.delete(id);
     }
