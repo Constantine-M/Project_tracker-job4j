@@ -8,17 +8,19 @@ public final class Airbus extends Aircraft {
     public static final int COUNT_ENGINE = 2;
 
     /**
-     * Ничего умнее к сожалению не придумалось.
-     * Пробовал перегружать конструктор - тоже не то.
-     * Пробовал манипуляции с константой вроде COUNT_ENGINE += 2 или
-     * COUNT_ENGINE += COUNT_ENGINE - тоже глупо вышло.
+     * Эту переменную НЕ нужно делать статической, иначе она будет общей для всех Airbus.
      */
-    private static int engines = 4;
+    private int engines;
 
     private String name;
 
     public Airbus(String name) {
         this.name = name;
+        if (name.equals("A380")) {
+            engines = 4;
+        } else {
+            engines = COUNT_ENGINE;
+        }
     }
 
     public String getName() {
@@ -35,11 +37,7 @@ public final class Airbus extends Aircraft {
     }
 
     public void printCountEngine() {
-        if (name == "A380") {
-            System.out.println("Количество двигателей равно: " + engines);
-        } else {
-            System.out.println("Количество двигателей равно: " + COUNT_ENGINE);
-        }
+        System.out.println("Кол-во двигателей: " + engines);
     }
 
     @Override
