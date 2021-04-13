@@ -7,20 +7,10 @@ public final class Airbus extends Aircraft {
      */
     public static final int COUNT_ENGINE = 2;
 
-    /**
-     * Эту переменную НЕ нужно делать статической, иначе она будет общей для всех Airbus.
-     */
-    private int engines;
-
     private String name;
 
     public Airbus(String name) {
         this.name = name;
-        if (name.equals("A380")) {
-            engines = 4;
-        } else {
-            engines = COUNT_ENGINE;
-        }
     }
 
     public String getName() {
@@ -36,7 +26,18 @@ public final class Airbus extends Aircraft {
         System.out.println("Модель самолета: " + name);
     }
 
+    /**
+     * Переменную engines сделал локальной. Логично, т.к. у нас ведь есть константа
+     * и условие, что 4 двигателя только у 1 самолета, а у остальных по 2.
+     * Еще одна перменная поля явно была лишней, но до меня не дошло.
+     */
     public void printCountEngine() {
+        int engines = 0;
+        if (name.equals("A380")) {
+            engines = 4;
+        } else {
+            engines = COUNT_ENGINE;
+        }
         System.out.println("Кол-во двигателей: " + engines);
     }
 
