@@ -20,13 +20,12 @@ public class PhoneDictionary {
      * Вернуть список всех пользователей, который содержат key в любых полях.
      * @param key Ключ поиска.
      * @return Список подощедщих пользователей.
-     * Когда нужно проверять по всем полям, то нужно через ИЛИ указывать все поля.
      */
     public ArrayList<Person> find(String key) {
         ArrayList<Person> result = new ArrayList<>();
         for (Person list : persons) {
             if (list.getName().contains(key) || list.getSurname().contains(key)
-            || list.getPhone().contains(key) || list.getPhone().contains(key)) {
+                    || list.getPhone().contains(key) || list.getPhone().contains(key)) {
                 result.add(list);
             }
         }
