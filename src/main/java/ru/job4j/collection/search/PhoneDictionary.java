@@ -19,18 +19,14 @@ public class PhoneDictionary {
     /**
      * Вернуть список всех пользователей, который содержат key в любых полях.
      * @param key Ключ поиска.
-     * @return Список подощедщих пользователей.
-     * Здесь есть паразитная конструкция. Я о ней помню, но с помощью try-catch не получается.
-     * Можно еще вернуть null и не использовать исключения.
+     * @return Список подошедших пользователей.
      */
-    public ArrayList<Person> find(String key) throws NotFoundException {
+    public ArrayList<Person> find(String key) {
         ArrayList<Person> result = new ArrayList<>();
         for (Person client : persons) {
             if (client.getName().contains(key) || client.getSurname().contains(key)
                     || client.getPhone().contains(key) || client.getPhone().contains(key)) {
                 result.add(client);
-            } else {
-                throw new NotFoundException("Person not found");
             }
         }
         return result;

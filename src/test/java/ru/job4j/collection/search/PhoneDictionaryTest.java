@@ -1,11 +1,9 @@
 package ru.job4j.collection.search;
 
-import org.hamcrest.Matcher;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 
 import java.util.ArrayList;
 
@@ -19,7 +17,7 @@ public class PhoneDictionaryTest {
      * А чтобы сравнить, мы используем get-еры.
      */
     @Test
-    public void whenFindPersonByName() throws NotFoundException {
+    public void whenFindPersonByName() {
         PhoneDictionary phones = new PhoneDictionary();
         phones.add(
                 new Person("Const", "Mezenin", "8752", "VTagil")
@@ -28,30 +26,20 @@ public class PhoneDictionaryTest {
         ArrayList<Person> persons = phones.find(key);
         assertThat(persons.get(0).getName(), is("Const"));
     }
-    /**
-    @Test
-    public void whenNotFindPerson() {
-        PhoneDictionary phones = new PhoneDictionary();
-        phones.add(
-                new Person("Const", "Mezenin", "8752", "VTagil")
-        );
-        String key = "123";
-        ArrayList<Person> persons = phones.find(key);
-        assertThat(persons, is(nullValue()));
-    }*/
 
     /**
-     * Используется паразитная конструкция if-else-throw!!!
+     * Чтобы проверить, что мы ничего не нашли, нужно в тесте показать,
+     * что результирующая коллекция ПУСТАЯ. И всё).
      */
-    @Test(expected = NotFoundException.class)
-    public void whenNotFindPersonThenEx() throws NotFoundException {
+    @Test
+    public void whenNotFindPersonThenEmpty() {
         PhoneDictionary phones = new PhoneDictionary();
         phones.add(
                 new Person("Const", "Mezenin", "8752", "VTagil")
         );
         String key = "123";
+        int size = 0;
         ArrayList<Person> persons = phones.find(key);
+        assertThat(persons.size(), is(size));
     }
-
-
 }
