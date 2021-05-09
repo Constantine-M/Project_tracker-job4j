@@ -1,5 +1,6 @@
 package ru.job4j.collection.search;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -38,8 +39,7 @@ public class PhoneDictionaryTest {
                 new Person("Const", "Mezenin", "8752", "VTagil")
         );
         String key = "123";
-        int size = 0;
         ArrayList<Person> persons = phones.find(key);
-        assertThat(persons.size(), is(size));
+        Assert.assertTrue(persons.isEmpty());
     }
 }
