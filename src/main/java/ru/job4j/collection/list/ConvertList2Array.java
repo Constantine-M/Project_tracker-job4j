@@ -11,7 +11,7 @@ public class ConvertList2Array {
      * С помощью метода Math.ceil мы можем округлять в большую сторону.
      * Результат метода возвращает тип double, а нам нужен int, поэтому произвели явное приведение.
      * @param list список.
-     * @param cells ячейка в двухмерном массиве (кол-во).
+     * @param cells кол-во ячеек в двухмерном массиве.
      * @return
      */
     public static int[][] toArray(List<Integer> list, int cells) {
@@ -20,10 +20,7 @@ public class ConvertList2Array {
         int [][] array = new int[groups][cells];
         int row = 0, cell = 0;
         for (Integer num : list) {
-            array[row][cell] = num;
-            if (cell < cells) {
-                cell++;
-            }
+            array[row][cell++] = num;
             if (cell == cells) {
                 row++;
                 cell = 0;
