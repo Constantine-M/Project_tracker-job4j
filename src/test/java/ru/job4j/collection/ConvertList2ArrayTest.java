@@ -23,4 +23,17 @@ public class ConvertList2ArrayTest {
         };
         assertThat(result, is(expect));
     }
+
+    @Test
+    public void when2ElementsThen4InArray() {
+        ConvertList2Array list = new ConvertList2Array();
+        int[][] result = list.toArray(
+                Arrays.asList(1, 2, 3), 2
+        );
+        int [][] expect = {
+                {1, 2},
+                {3, 0},
+        };
+        assertThat(result, is(expect));
+    }
 }
