@@ -1,25 +1,32 @@
 package ru.job4j.tracker;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class Tracker {
     /**Данное поле содержит кол-во заявлений.
      * Оно ограничено 100 позиций.
+     * Блок "Коллекции" - Теперь мы используем коллекции. В дальнейшем управление index будет происходит внутри коллекции.
      */
-    private final Item[] items = new Item[100];
+    private final List<Item> items = new ArrayList<>();
+//    private final Item[] items = new Item[100];
     private int ids = 1;
-    private int size = 0;
+//    private int size = 0;
 
     /**Добавляет заявку, переданную в аргументах в массив заявок items.
      * С помощью setId мы проставляем уникальный ключ в объект Item item.
      * Поле ids используется для генерации нового ключа.
      * В нашем примере мы используем последовательность (то есть просто увеличиваем на 1).
+     * Блок "Коллекции" - теперь добавление заявки будет осуществляться методом add интерфейса List.
      * @param item заявка
      * @return обновленный массив заявок.
      */
     public Item add(Item item) {
         item.setId(ids++);
-        items[size++] = item;
+        items.add(item);
+//        items[size++] = item;
         return item;
     }
 
@@ -32,13 +39,14 @@ public class Tracker {
      * @param id номер заявки
      * @return заявку с найденным номером или null.
      * Доп - после того, как мы создали метод indexOf(), то методы
-     * findById и indexOf стали похожи - значит поиск по id можно
-     * упростить.
+     * findById и indexOf стали похожи - значит поиск по id можно упростить.
      * Если индекс (с помощью метода) найден, то возвращаем item, иначе null.
+     * Блок "Коллекции" - теперь возвращаем объект так: items.get(index).
      */
     public Item findById(int id) {
         int index = indexOf(id);
-        return index != -1 ? items[index] : null;
+        return index != -1 ? items.get(index) : null;
+//        return index != -1 ? items[index] : null;
     }
 
     /**
@@ -49,9 +57,12 @@ public class Tracker {
      * т.к. size - является переменной поля. То есть, когда мы создаем заявку, то
      * size уже != 0. И когда мы выводим все заявки, то мы как раз
      * выводим size заявок из пула в 100 штук (это сколько мы зарезервировали).
+     * Блок "Коллекции" - ранее мы возвращали массив. Теперь возвращаем коллекцию.
      */
-    public Item[] findAll() {
-        return Arrays.copyOf(items, size);
+    public List<Item> findAll() {
+        List<Item> copyItems = new ArrayList<>(items);
+        return copyItems;
+//        return Arrays.copyOf(items, size);
     }
 
     /**
@@ -63,18 +74,27 @@ public class Tracker {
      * использовать size.
      * @param key имя списка
      * @return список заявок/заявку по найденному имени
+     * Блок "Коллекции" - проходимся по списку объектов items, сравниавем поле имени с ключом key.
+     * Если совпадает, то добавляем в новый список объектов.
      */
-    public Item[] findByName(String key) {
-        Item[] copyFindName = new Item[items.length];
-        int number = 0;
-        for (int i = 0; i < size; i++) {
-            Item item = items[i];
+    public List<Item> findByName(String key) {
+        List<Item> itemsList = new ArrayList<>();
+        for (Item item : items) {
             if (item.getName().equals(key)) {
-                copyFindName[number] = item;
-                number++;
+                itemsList.add(item);
             }
         }
-        return Arrays.copyOf(copyFindName, number);
+        return itemsList;
+//        Item[] copyFindName = new Item[items.length];
+//        int number = 0;
+//        for (int i = 0; i < size; i++) {
+//            Item item = items[i];
+//            if (item.getName().equals(key)) {
+//                copyFindName[number] = item;
+//                number++;
+//            }
+//        }
+//        return Arrays.copyOf(copyFindName, number);
     }
 
     /**
@@ -91,13 +111,19 @@ public class Tracker {
      */
     public boolean replace(int id, Item item) {
         int index = indexOf(id);
-        boolean rsl = index != -1 && items[index] != null;
-        if (rsl) {
-            items[index] = item;
+        if (index != -1 && items.get(index) != null) {
+            items.set(index, item);
             item.setId(id);
             return true;
         }
         return false;
+//        boolean rsl = index != -1 && items[index] != null;
+//        if (rsl) {
+//            items[index] = item;
+//            item.setId(id);
+//            return true;
+//        }
+//        return false;
     }
 
     /**
@@ -105,15 +131,24 @@ public class Tracker {
      * Метод объявлен как private, потому что он используется только внутри системы.
      * @param id номер заявки
      * @return индекс заявки в массиве
+     * Блок "Коллекции" - теперь главное правильно ходить по коллекции.
+     * Здесь в качестве переменной внутри цикла использовали объект класса Item.
      */
     private int indexOf(int id) {
         int rsl = -1;
-        for (int i = 0; i < size; i++) {
-            if (items[i].getId() == id) {
-                rsl = i;
+        for (Item item : items) {
+            if (item.getId() == id) {
+                rsl = items.indexOf(item);
                 break;
             }
         }
+//        int rsl = -1;
+//        for (int i = 0; i < size; i++) {
+//            if (items[i].getId() == id) {
+//                rsl = i;
+//                break;
+//            }
+//        }
         return rsl;
     }
 
@@ -128,16 +163,23 @@ public class Tracker {
      * если заявка не была найдена по id.
      * P.S.А тут валидация есть. Просто она внутри условия и я бы хотел оставить так.
      * Надеюсь, что это не преступление.
+     * Блок "Коллекции" - здесь я сначала проверил, то удаляемая запись существует.
+     * А потом, что закрыть дыру в списке, я пересоздал список.
      */
     public boolean delete(int id) {
         int indexToDel = indexOf(id);
-        if (indexToDel != -1 && items[indexToDel] != null) {
-            int start = indexToDel + 1;
-            items[indexToDel] = null;
-            System.arraycopy(items, start, items, indexToDel, size - indexToDel);
-            size--;
+        if (indexToDel != -1 && items.get(indexToDel) != null) {
+            items.remove(indexToDel);
             return true;
         }
         return false;
+//        if (indexToDel != -1 && items[indexToDel] != null) {
+//            int start = indexToDel + 1;
+//            items[indexToDel] = null;
+//            System.arraycopy(items, start, items, indexToDel, size - indexToDel);
+//            size--;
+//            return true;
+//        }
+//        return false;
     }
 }

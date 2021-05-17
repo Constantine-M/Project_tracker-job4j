@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.List;
+
 public class FindAllAction implements UserAction {
     /**
      * Создали переменную поля  в виде объекта класса Output.
@@ -23,10 +25,16 @@ public class FindAllAction implements UserAction {
         return "Find all Items";
     }
 
+    /**
+     * Блок "Коллекции" - в данном методе ранее мы создавали массив заявок. А теперь используем коллекцию.
+     * @param input переменная интерфейса Input (определяет работу класса по получению данных от пользователя в консоли)
+     * @param tracker переменная класса Tracker для манипуляций с заявками
+     * @return
+     */
     @Override
     public boolean execute(Input input, Tracker tracker) {
         output.println("==== Create complete list ====");
-        Item[] list = tracker.findAll();
+        List<Item> list = tracker.findAll();
         for (Item records : list) {
             output.println(records);
         }

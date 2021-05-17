@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.List;
+
 public class FindByNameAction implements UserAction {
     /**
      * Создали переменную поля  в виде объекта класса Output.
@@ -23,11 +25,17 @@ public class FindByNameAction implements UserAction {
         return "Find Item by name";
     }
 
+    /**
+     * Блок "Коллекции" - в данном методе ранее мы создавали массив заявок. А теперь используем коллекцию.
+     * @param input переменная интерфейса Input (определяет работу класса по получению данных от пользователя в консоли)
+     * @param tracker переменная класса Tracker для манипуляций с заявками
+     * @return TRUE, если нашли заявку по имени, или сообщение, если не нашли.
+     */
     @Override
     public boolean execute(Input input, Tracker tracker) {
         String nameRec = input.askStr("Enter record name: ");
-        Item[] records = tracker.findByName(nameRec);
-        if (records.length > 0) {
+        List<Item> records = tracker.findByName(nameRec);
+        if (records.size() > 0) {
             for (Item recs : records) {
                 output.println(recs);
             }
