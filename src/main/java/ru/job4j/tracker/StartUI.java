@@ -43,15 +43,6 @@ public class StartUI {
             UserAction action = actions.get(select);
             run = action.execute(input, tracker);
         }
-//        while (run) {
-//            this.showMenu(actions);
-//            int select = input.askInt("Select: ");
-//            if (select < 0 || select >= actions.length) {
-//                out.println("Wrong input, you can select: 0 .. " + (actions.length - 1));
-//                continue;
-//            }
-//            UserAction action = actions[select];
-//            run = action.execute(input, tracker);
     }
 
     /**
@@ -61,12 +52,9 @@ public class StartUI {
      */
     private void showMenu(List<UserAction> actions) {
         out.println("Menu.");
-        for (UserAction action : actions) {
-            out.println(actions.indexOf(action) + "." + action.name());
+        for (int index = 0; index < actions.size(); index++) {
+           out.println(index + "." + actions.get(index).name());
         }
-//        for (int index = 0; index < actions.length; index++) {
-//           out.println(index + "." + actions[index].name());
-//        }
     }
 
     /**Все статические методы (действия), которые здесь были,
@@ -93,15 +81,6 @@ public class StartUI {
         actions.add(new FindByIDAction(output));
         actions.add(new FindByNameAction(output));
         actions.add(new ExitAction(output));
-//        UserAction[] actions = {
-//                new CreateAction(output),
-//                new FindAllAction(output),
-//                new ReplaceAction(output),
-//                new DeleteAction(output),
-//                new FindByIDAction(output),
-//                new FindByNameAction(output),
-//                new ExitAction(output)
-//        };
         new StartUI(output).init(input, tracker, actions);
     }
 }

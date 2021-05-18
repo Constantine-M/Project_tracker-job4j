@@ -1,8 +1,6 @@
 package ru.job4j.tracker;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class Tracker {
@@ -11,9 +9,7 @@ public class Tracker {
      * Блок "Коллекции" - Теперь мы используем коллекции. В дальнейшем управление index будет происходит внутри коллекции.
      */
     private final List<Item> items = new ArrayList<>();
-//    private final Item[] items = new Item[100];
     private int ids = 1;
-//    private int size = 0;
 
     /**Добавляет заявку, переданную в аргументах в массив заявок items.
      * С помощью setId мы проставляем уникальный ключ в объект Item item.
@@ -26,7 +22,6 @@ public class Tracker {
     public Item add(Item item) {
         item.setId(ids++);
         items.add(item);
-//        items[size++] = item;
         return item;
     }
 
@@ -46,7 +41,6 @@ public class Tracker {
     public Item findById(int id) {
         int index = indexOf(id);
         return index != -1 ? items.get(index) : null;
-//        return index != -1 ? items[index] : null;
     }
 
     /**
@@ -60,9 +54,7 @@ public class Tracker {
      * Блок "Коллекции" - ранее мы возвращали массив. Теперь возвращаем коллекцию.
      */
     public List<Item> findAll() {
-        List<Item> copyItems = new ArrayList<>(items);
-        return copyItems;
-//        return Arrays.copyOf(items, size);
+        return new ArrayList<>(items);
     }
 
     /**
@@ -85,16 +77,6 @@ public class Tracker {
             }
         }
         return itemsList;
-//        Item[] copyFindName = new Item[items.length];
-//        int number = 0;
-//        for (int i = 0; i < size; i++) {
-//            Item item = items[i];
-//            if (item.getName().equals(key)) {
-//                copyFindName[number] = item;
-//                number++;
-//            }
-//        }
-//        return Arrays.copyOf(copyFindName, number);
     }
 
     /**
@@ -117,13 +99,6 @@ public class Tracker {
             return true;
         }
         return false;
-//        boolean rsl = index != -1 && items[index] != null;
-//        if (rsl) {
-//            items[index] = item;
-//            item.setId(id);
-//            return true;
-//        }
-//        return false;
     }
 
     /**
@@ -136,19 +111,12 @@ public class Tracker {
      */
     private int indexOf(int id) {
         int rsl = -1;
-        for (Item item : items) {
-            if (item.getId() == id) {
-                rsl = items.indexOf(item);
+        for (int index = 0; index < items.size(); index++) {
+            if (items.get(index).getId() == id) {
+                rsl = index;
                 break;
             }
         }
-//        int rsl = -1;
-//        for (int i = 0; i < size; i++) {
-//            if (items[i].getId() == id) {
-//                rsl = i;
-//                break;
-//            }
-//        }
         return rsl;
     }
 
@@ -168,18 +136,10 @@ public class Tracker {
      */
     public boolean delete(int id) {
         int indexToDel = indexOf(id);
-        if (indexToDel != -1 && items.get(indexToDel) != null) {
+        if (indexToDel != -1) {
             items.remove(indexToDel);
             return true;
         }
         return false;
-//        if (indexToDel != -1 && items[indexToDel] != null) {
-//            int start = indexToDel + 1;
-//            items[indexToDel] = null;
-//            System.arraycopy(items, start, items, indexToDel, size - indexToDel);
-//            size--;
-//            return true;
-//        }
-//        return false;
     }
 }
