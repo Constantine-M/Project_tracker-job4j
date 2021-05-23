@@ -32,6 +32,7 @@ public class UniqueText {
         for (String dublicate : text) {
             if (!check.contains(dublicate)) {
                 rsl = false;
+                break;
             }
         }
         return rsl;
