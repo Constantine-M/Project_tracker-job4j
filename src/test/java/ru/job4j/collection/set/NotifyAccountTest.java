@@ -18,7 +18,7 @@ public class NotifyAccountTest {
      * во время тестирования.
      */
     @Test
-    public void whenTheOnlyOneClient() {
+    public void whenDeleteDublicate() {
         List<Account> accounts = Arrays.asList(
                 new Account("123", "Consta", "1000"),
                 new Account("123", "ConstaM", "1000000"),
@@ -29,5 +29,20 @@ public class NotifyAccountTest {
                 new Account("456", "Batman", "99999999999")
         ));
         assertThat(NotifyAccount.sent(accounts), is(expected));
+    }
+
+    @Test
+    public void whenBothAccountUnique() {
+        List<Account> accounts = Arrays.asList(
+                new Account("123", "Petr Arsentev", "eDer3432f"),
+                new Account("142", "Petr Arsentev", "000001")
+        );
+        HashSet<Account> expect = new HashSet<>(
+                Arrays.asList(
+                        new Account("123", "Petr Arsentev", "eDer3432f"),
+                        new Account("142", "Petr Arsentev", "000001")
+                )
+        );
+        assertThat(NotifyAccount.sent(accounts), is(expect));
     }
 }
