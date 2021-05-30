@@ -45,4 +45,24 @@ public class OrderConvertTest {
         expected.put("3", new Order("3", "milk"));
         assertThat(map, is(expected));
     }
+
+    /**
+     * Данный тест показывает, если номер заказа дублируется, то
+     * в Map попадает последний заказ, т.к. в случае с одинаковыми
+     * ключами значение новой записи заменяет значение старой -
+     * происходит перезапись.
+     */
+    @Test
+    public void whenNumberIsDublicate() {
+        List<Order> orders = Arrays.asList(
+                new Order("1", "cheese"),
+                new Order("1", "eggs"),
+                new Order("3", "milk")
+        );
+        HashMap<String, Order> map = OrderConvert.process(orders);
+        HashMap<String, Order> expected = OrderConvert.process(orders);
+        expected.put("1", new Order("1", "eggs"));
+        expected.put("3", new Order("3", "milk"));;
+        assertThat(map, is(expected));
+    }
 }
