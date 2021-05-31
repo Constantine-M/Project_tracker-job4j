@@ -17,14 +17,13 @@ public class BankService {
      */
     public void addUser(User user) {
         users.putIfAbsent(user, new ArrayList<Account>());
-//        if (!users.containsKey(user)) {
-//            users.put(user, new ArrayList<Account>());
-//        }
     }
 
     /**
      * Данный метод добавляет счет к пользователю.
      * 1.Находим пользователя.
+     * 1.1.Лучше вынести список счетов пользователя в отдельную переменную, чтобы не копировать
+     * код и не искать дважды.
      * 2.Спрашиваем, содержится ли у ключевого элемента user в списке счетов
      * нужный нам счет account, который мы передали в метод.
      * 3.Если не содержится, то добавляем значение счета в связку с указанным ключом.
@@ -33,8 +32,9 @@ public class BankService {
      */
     public void addAccount(String passport, Account account) {
         User user = findByPassport(passport);
-        if (!users.get(user).contains(account)) {
-            users.get(user).add(account);
+        List<Account> listAccount = users.get(user);
+        if (user != null && !listAccount.contains(account)) {
+            listAccount.add(account);
         }
     }
 
@@ -45,11 +45,11 @@ public class BankService {
      * Мы проходим циклом по ключам и сравниваем поле passport с данными,
      * которые передаем в метод.
      * @param passport номер паспорта (String).
-     * @return
+     * @return пользователя по данным паспорта
      */
     public User findByPassport(String passport) {
         for (User user : users.keySet()) {
-            if (user != null && user.getPassport().equals(passport)) {
+            if (user.getPassport().equals(passport)) {
                 return user;
             }
         }
@@ -72,8 +72,9 @@ public class BankService {
      * @return один из счетов пользователя по реквизитам.
      */
     public Account findByRequisite(String passport, String requisite) {
-        List<Account> userAccount = users.get(findByPassport(passport));
-        if (userAccount != null) {
+        User user = findByPassport(passport);
+        if (user != null) {
+            List<Account> userAccount = users.get(user);
             int index = userAccount.indexOf(new Account(requisite, -1));
             return userAccount.get(index);
 //            for (Account s : userAccount) {
@@ -91,7 +92,7 @@ public class BankService {
         boolean rsl = false;
         Account srcAccount = findByRequisite(srcPassport, srcRequisite);
         Account destAccount = findByRequisite(destPassport, destRequisite);
-        if (destAccount != null || srcAccount.getBalance() > amount) {
+        if (destAccount != null || srcAccount!= null || srcAccount.getBalance() > amount) {
             srcAccount.setBalance(srcAccount.getBalance() - amount);
             destAccount.setBalance((destAccount.getBalance() + amount));
             rsl = true;
