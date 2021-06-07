@@ -27,7 +27,6 @@ public class ItemTest {
                 new Item("Petr"),
                 new Item("Stas")
         );
-
         List<Item> sorted = new ArrayList<>(items);
         Collections.sort(sorted, new SortByNameAscending());
         assertEquals(rsl, sorted);
@@ -41,19 +40,52 @@ public class ItemTest {
                 new Item("Stas"),
                 new Item("Elena")
         );
-//        List<Item> rsl = Arrays.asList(
-//                new Item("Stas"),
-//                new Item("Petr"),
-//                new Item("Elena"),
-//                new Item("Consta")
-//        );
-        List<Item> rsl = new ArrayList<>();
-        rsl.add(new Item("Stas"));
-        rsl.add(new Item("Petr"));
-        rsl.add(new Item("Elena"));
-        rsl.add(new Item("Consta"));
+        List<Item> rsl = Arrays.asList(
+                new Item("Stas"),
+                new Item("Petr"),
+                new Item("Elena"),
+                new Item("Consta")
+        );
         List<Item> sorted = new ArrayList<>(items);
         Collections.sort(sorted, new SortByNameDescending());
+        assertEquals(rsl, sorted);
+    }
+
+    @Test
+    public void whenSortByIdAscending() {
+        List<Item> items = Arrays.asList(
+                new Item("Consta", 1),
+                new Item("Petr", 0),
+                new Item("Stas", 3),
+                new Item("Elena", 2)
+        );
+        List<Item> rsl = Arrays.asList(
+                new Item("Petr", 0),
+                new Item("Consta", 1),
+                new Item("Elena", 2),
+                new Item("Stas", 3)
+        );
+        List<Item> sorted = new ArrayList<>(items);
+        Collections.sort(sorted, new SortByIdAscending());
+        assertEquals(rsl, sorted);
+    }
+
+    @Test
+    public void whenSortByIdDescending() {
+        List<Item> items = Arrays.asList(
+                new Item("Consta", 1),
+                new Item("Petr", 0),
+                new Item("Stas", 3),
+                new Item("Elena", 2)
+        );
+        List<Item> rsl = Arrays.asList(
+                new Item("Stas", 3),
+                new Item("Elena", 2),
+                new Item("Consta", 1),
+                new Item("Petr", 0)
+        );
+        List<Item> sorted = new ArrayList<>(items);
+        Collections.sort(sorted, new SortByIdDescending());
         assertEquals(rsl, sorted);
     }
 }
