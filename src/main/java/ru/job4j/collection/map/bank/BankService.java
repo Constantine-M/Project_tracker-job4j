@@ -74,8 +74,7 @@ public class BankService {
         if (user != null) {
             for (Account s : userAccount) {
                 if (s.getRequisite().equals(requisite)) {
-                    int index = userAccount.indexOf(s);
-                    return userAccount.get(index);
+                    return s;
                 }
             }
         }
