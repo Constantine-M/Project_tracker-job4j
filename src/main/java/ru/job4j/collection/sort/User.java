@@ -1,7 +1,8 @@
 package ru.job4j.collection.sort;
 
 
-import java.util.Comparator;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 
 /**
@@ -22,10 +23,17 @@ public class User implements Comparable<User> {
      * а у интерфейса Comparator метод " compare " и другие.
      * Поэтому мы в этом методе, возвращая компаратор, использовали
      * метод " compare ".
-     */
+     * Приведенный ниже метод классный, но по задаче все делаем через Comparable.
+     * public int compareTo(User user) {
+     *   return Comparator.comparing(User::getName).thenComparing(User::getAge).compare(this, user);
+     }*/
     @Override
-    public int compareTo(User user) {
-        return Comparator.comparing(User::getName).thenComparing(User::getAge).compare(this, user);
+    public int compareTo(User anotherUser) {
+        int compareName = name.compareTo(anotherUser.name);
+        if (compareName == 0) {
+            return Integer.compare(age, anotherUser.age);
+        }
+        return compareName;
     }
 
     @Override
@@ -45,13 +53,5 @@ public class User implements Comparable<User> {
     public User(String name, int age) {
         this.name = name;
         this.age = age;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
     }
 }
