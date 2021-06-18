@@ -46,6 +46,4 @@ public class Service {
         Service service = new Service(store);
         service.extract();
     }
-
-
 }

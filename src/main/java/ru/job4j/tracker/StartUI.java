@@ -63,7 +63,8 @@ public class StartUI {
      * Начало - Создаем объект класса Log4File и получаем его методы.
      * Середина - Создаем массив с действиями.
      * Концовка - Вызов нестатического метода. Необходимо обратиться через объект.
-     * Input input = new ValidateInput(output, new ConsoleInput()); - в данной строке использовали ДЕКОРАТОР.
+     * Input input = new ValidateInput(output, new ConsoleInput()); - в данной
+     * строке использовали ДЕКОРАТОР.
      * Блок "Коллекции" - массив с действиями переделываем в коллекцию.
      */
     public static void main(String[] args) {

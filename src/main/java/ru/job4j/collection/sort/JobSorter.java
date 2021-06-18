@@ -33,13 +33,16 @@ public class JobSorter {
                 new Job("Fix bugzz", 2),
                 new Job("Task", 0)
         );
-        System.out.println("В интерфейсе Comparator есть метод с реализацией по " + System.lineSeparator() +
-                "умолчанию - thenComparing. Этот метод принимает другой компаратор." + System.lineSeparator()+
-                        "Таким образом, можно соединить или скомбинировать любую сортировку.");
+        System.out.println("В интерфейсе Comparator есть метод с"
+                + System.lineSeparator() + " реализацией по " + System.lineSeparator()
+                + "умолчанию - thenComparing. Этот метод принимает "  + System.lineSeparator()
+                + " другой компаратор." + System.lineSeparator()
+                       + "Таким образом, можно соединить или " + System.lineSeparator()
+                + " скомбинировать любую сортировку.");
         Collections.sort(jobs, new JobDescByName().thenComparing(new JobDescByPriority()));
         System.out.println(jobs);
-        System.out.println("Создадим комбинированный компаратор: " + System.lineSeparator() +
-                "сортировка по длине имени, по имени и приоритету.");
+        System.out.println("Создадим комбинированный компаратор: " + System.lineSeparator()
+                + "сортировка по длине имени, по имени и приоритету.");
         Collections.sort(jobs, new JobDescByNameLn()
                 .thenComparing(new JobDescByName()
                 .thenComparing(new JobDescByPriority())));

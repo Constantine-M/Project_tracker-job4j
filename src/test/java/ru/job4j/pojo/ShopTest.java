@@ -8,7 +8,7 @@ public class ShopTest {
 
     @Test
     public void whenLastNull() {
-        Product product[] = new Product[5];
+        Product[] product = new Product[5];
         product[0] = new Product("Milk", 10);
         product[1] = new Product("Bread", 4);
         product[2] = new Product("Egg", 19);
@@ -18,7 +18,7 @@ public class ShopTest {
 
     @Test
     public void whenFirstNull() {
-        Product product[] = new Product[5];
+        Product[] product = new Product[5];
         product[1] = new Product("Milk", 10);
         product[2] = new Product("Bread", 4);
         product[3] = new Product("Egg", 19);
@@ -28,7 +28,7 @@ public class ShopTest {
 
     @Test
     public void whenHasNotNull() {
-        Product product[] = new Product[5];
+        Product[] product = new Product[5];
         product[0] = new Product("Milk", 10);
         product[1] = new Product("Bread", 4);
         product[2] = new Product("Egg", 19);

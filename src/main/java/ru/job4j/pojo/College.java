@@ -9,6 +9,7 @@ public class College {
         student.setGroup("321-B");
         student.setAdmission(LocalDate.of(2012, 9, 1));
 
-        System.out.println(student.getName() + " зачислен в ВУЗ " + student.getAdmission() + " в группу " + student.getGroup());
+        System.out.println(student.getName() + " зачислен в ВУЗ "
+                + student.getAdmission() + " в группу " + student.getGroup());
     }
 }

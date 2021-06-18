@@ -37,7 +37,7 @@ public class BankServiceTest {
     public void whenTransferMoney() {
         User user = new User("1234", "Consta");
         BankService bank = new BankService();
-        bank.addUser(user);;
+        bank.addUser(user);
         bank.addAccount(user.getPassport(), new Account("2143", 999999D));
         bank.addAccount(user.getPassport(), new Account("7586", 150D));
         bank.transferMoney(user.getPassport(), "2143", user.getPassport(),

@@ -22,7 +22,8 @@ public class Surgeon extends Doctor {
      * (родительского класса) и смогли обратиться к его параметрам.
      * А ниже инициализировали поля, которые есть в классе-наследнике - Dentist.
      */
-    public Surgeon(String name, String surname, String education, LocalDate birthday, String certificate, String type) {
+    public Surgeon(String name, String surname, String education,
+                   LocalDate birthday, String certificate, String type) {
         super(name, surname, education, birthday, certificate);
         this.type = type;
     }
@@ -31,5 +32,5 @@ public class Surgeon extends Doctor {
      * Входящим параметром выступает объект класса Patient.
      * @param patient пациент.
      */
-    public void sewCut(Patient patient) {}
+    public void sewCut(Patient patient) { }
 }

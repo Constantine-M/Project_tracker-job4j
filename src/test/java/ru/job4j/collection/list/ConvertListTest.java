@@ -12,7 +12,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ConvertListTest {
     /**
      * Чтобы создать список массивов, нужно сначала создать список.
-     * А затем добавлять в него массивы. По-другому у меня не получалось..поэтому я подглядывал в каркас.
+     * А затем добавлять в него массивы. По-другому у
+     * меня не получалось..поэтому я подглядывал в каркас.
      */
     @Test
     public void whenListOf2ArraysThenConvertToListOfNineEl() {

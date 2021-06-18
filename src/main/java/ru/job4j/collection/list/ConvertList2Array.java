@@ -17,7 +17,7 @@ public class ConvertList2Array {
     public static int[][] toArray(List<Integer> list, int cells) {
         int groups = (int) Math.ceil((double) list.size() / cells);
         System.out.println(groups);
-        int [][] array = new int[groups][cells];
+        int[][] array = new int[groups][cells];
         int row = 0, cell = 0;
         for (Integer num : list) {
             array[row][cell++] = num;
@@ -30,7 +30,8 @@ public class ConvertList2Array {
     }
 
     /**
-     * В первой строке создали из набора элементов (1, 2, 3...) объект List с помощью метода List.of.
+     * В первой строке создали из набора элементов (1, 2, 3...)
+     * объект List с помощью метода List.of.
      */
     public static void main(String[] args) {
         List<Integer> list = List.of(1, 2, 3, 4, 5, 6, 7);

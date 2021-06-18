@@ -8,7 +8,6 @@ import static org.hamcrest.Matchers.is;
 
 import java.util.ArrayList;
 
-
 public class PhoneDictionaryTest {
     /**
      * В тесте мы создаем объект класса PhoneDictionary (список номеров в тел. книге),

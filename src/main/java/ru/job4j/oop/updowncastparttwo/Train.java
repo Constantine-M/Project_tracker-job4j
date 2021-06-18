@@ -8,6 +8,7 @@ public class Train implements Vehicle {
 
     @Override
     public void sound() {
-        System.out.println(getClass().getSimpleName() + " бибикает, гудит, поднимая дым и пугая индусов.");
+        System.out.println(getClass().getSimpleName()
+                + " бибикает, гудит, поднимая дым и пугая индусов.");
     }
 }

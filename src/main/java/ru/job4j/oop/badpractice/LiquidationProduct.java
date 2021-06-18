@@ -28,6 +28,7 @@ public final class LiquidationProduct {
     public Product getProduct() {
         return product;
     }
+
     /**Мы переопределили метод (от метода родительского класса)
      * и написали так, чтобы скидка составляла 90%.
      * @return 90% скидка.

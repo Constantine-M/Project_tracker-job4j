@@ -20,7 +20,8 @@ public class Doctor extends Profession {
      * (родительского класса) и смогли обратиться к его параметрам.
      * А ниже инициализировали поля, которые есть в классе-наследнике - Doctor.
      */
-    public Doctor(String name, String surname, String education, LocalDate birthday, String certificate) {
+    public Doctor(String name, String surname, String education,
+                  LocalDate birthday, String certificate) {
         super(name, surname, education, birthday);
         this.certificate = certificate;
     }

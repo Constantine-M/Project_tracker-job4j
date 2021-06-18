@@ -21,7 +21,6 @@ public class UserStore {
         throw new UserNotFoundException("User not found");
     }
 
-
     /**
      * Чтобы не городить false, достаточно использовать "!" здесь - !user.isValid().
      */

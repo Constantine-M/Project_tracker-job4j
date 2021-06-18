@@ -17,7 +17,7 @@ public class Dendy {
              * преобразовывать String в Int.
              */
             int select = Integer.valueOf(input.nextLine());
-            if (select ==3) {
+            if (select == 3) {
                 System.out.println("Игра завершена.");
                 run = false;
             } else if (select == 1) {

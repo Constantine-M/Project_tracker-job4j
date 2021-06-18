@@ -24,7 +24,8 @@ public class Builder extends Engineer {
      * (родительского класса) и смогли обратиться к его параметрам.
      * А ниже инициализировали поля, которые есть в классе-наследнике - Programmer.
      */
-    public Builder(String name, String surname, String education, LocalDate birthday, int experience, String typeOfBuild) {
+    public Builder(String name, String surname, String education,
+                   LocalDate birthday, int experience, String typeOfBuild) {
         super(name, surname, education, birthday, experience);
         this.typeOfBuild = typeOfBuild;
     }
@@ -33,5 +34,7 @@ public class Builder extends Engineer {
      * В качесвте входящих данных выступает объект класса Figure.
      * @param figure объект чертеж.
      */
-    public void construct(Figure figure) {}
+    public void construct(Figure figure) {
+
+    }
 }

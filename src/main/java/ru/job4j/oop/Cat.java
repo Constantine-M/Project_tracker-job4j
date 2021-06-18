@@ -16,6 +16,7 @@ public class Cat {
     public void giveNick(String nick) {
         this.name = nick;
     }
+
     /**Создадим метод eat с параметром meat типа String.
      * Теперь у нас есть, что показать!
      * Мы можем написать, какую именно еду вывести на экран.

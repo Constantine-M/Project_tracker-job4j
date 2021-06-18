@@ -24,9 +24,9 @@ public class UserTest {
 
     @Test
     public void whenComparePertVSIvan() {
-        int rsl = new User( "Petr", 25).compareTo(new User(
+        int rsl = new User("Petr", 25).compareTo(new User(
                 "Ivan", 77)
         );
-        assertThat(rsl,greaterThan(0));
+        assertThat(rsl, greaterThan(0));
     }
 }

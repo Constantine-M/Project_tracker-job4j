@@ -22,7 +22,8 @@ public class Programmer extends Engineer {
      * (родительского класса) и смогли обратиться к его параметрам.
      * А ниже инициализировали поля, которые есть в классе-наследнике - Programmer.
      */
-    public Programmer(String name, String surname, String education, LocalDate birthday, int experience, String language) {
+    public Programmer(String name, String surname, String education,
+                      LocalDate birthday, int experience, String language) {
         super(name, surname, education, birthday, experience);
         this.language = language;
     }
@@ -31,5 +32,5 @@ public class Programmer extends Engineer {
      * Входным параметров выступает объект класса Task.
      * @param task входящий параметр (задача).
      */
-    public void closeTask(Task task) {}
+    public void closeTask(Task task) { }
 }

@@ -15,7 +15,7 @@ public class JobSorterTest {
                 new Job("Fix bug", 0),
                 new Job(("Reboot server"), 1)
         );
-        assertThat(rsl,lessThan(0));
+        assertThat(rsl, lessThan(0));
     }
 
     @Test
@@ -52,7 +52,8 @@ public class JobSorterTest {
     public void whenComparatorByNameLnAndPriority() {
         Job first = new Job("Task", 0);
         Job second = new Job("Task", 1);
-        Comparator<Job> cmpJobDescNameAndPrior = new JobDescByNameLn().thenComparing(new JobDescByPriority());
+        Comparator<Job> cmpJobDescNameAndPrior =
+                new JobDescByNameLn().thenComparing(new JobDescByPriority());
         Comparator<Job> cmpDescByNameLn = new JobDescByNameLn();
         int rsl = cmpJobDescNameAndPrior.compare(first, second);
         assertEquals(0, cmpDescByNameLn.compare(first, second));

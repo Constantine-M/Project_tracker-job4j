@@ -24,7 +24,7 @@ public class OrderConvertTest {
                 new Order("3", "milk")
         );
         HashMap<String, Order> map = OrderConvert.process(orders);
-        assertThat(map.get("3"), is(new Order("3","milk")));
+        assertThat(map.get("3"), is(new Order("3", "milk")));
     }
 
     /**
@@ -62,7 +62,7 @@ public class OrderConvertTest {
         HashMap<String, Order> map = OrderConvert.process(orders);
         HashMap<String, Order> expected = OrderConvert.process(orders);
         expected.put("1", new Order("1", "eggs"));
-        expected.put("3", new Order("3", "milk"));;
+        expected.put("3", new Order("3", "milk"));
         assertThat(map, is(expected));
     }
 }

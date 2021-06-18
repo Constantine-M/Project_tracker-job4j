@@ -25,8 +25,10 @@ public class Battery {
     public static void main(String[] args) {
         Battery powerBank = new Battery(28);
         Battery battery = new Battery(72);
-        System.out.println("Battery charge: " + powerBank.load + ". Phone battery: " + battery.load);
+        System.out.println("Battery charge: " + powerBank.load
+                + ". Phone battery: " + battery.load);
         powerBank.exchange(battery);
-        System.out.println("Battery charge: " + powerBank.load + ". Phone battery: " + battery.load);
+        System.out.println("Battery charge: " + powerBank.load
+                + ". Phone battery: " + battery.load);
     }
 }

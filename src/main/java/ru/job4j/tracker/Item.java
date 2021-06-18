@@ -71,20 +71,24 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item{" +
-                "created=" + created +
-                ", id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return "Item{"
+                + "created=" + created
+                + ", id=" + id
+                + ", name='" + name + '\''
+                + '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Item item = (Item) o;
-        return id == item.id &&
-                Objects.equals(name, item.name);
+        return id == item.id
+                && Objects.equals(name, item.name);
     }
 
     @Override

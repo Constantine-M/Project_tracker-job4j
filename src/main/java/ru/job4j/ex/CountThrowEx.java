@@ -2,9 +2,12 @@ package ru.job4j.ex;
 
 /**
  * Данный класс показывает как кидать исключения и правильно их выбирать.
- * java.lang.IllegalArgumentException - метод вызывается с некорректными параметрами.
- * java.lang.IllegalStateException - метод вызывается с объекта в не корректном состоянии.
- * java.lang.NullPointerException - методы вызывается у переменной, которая инициализирована null ссылкой.
+ * java.lang.IllegalArgumentException - метод вызывается
+ * с некорректными параметрами.
+ * java.lang.IllegalStateException - метод вызывается
+ * с объекта в не корректном состоянии.
+ * java.lang.NullPointerException - методы вызывается
+ * у переменной, которая инициализирована null ссылкой.
  */
 public class CountThrowEx {
     /**
@@ -17,7 +20,7 @@ public class CountThrowEx {
         }
         int rsl = 0;
         for (int index = start; index != finish; index++) {
-            rsl+= index;
+            rsl += index;
         }
         return rsl;
     }
@@ -25,7 +28,8 @@ public class CountThrowEx {
     /**
      * Если поменять местами числа в вызове метода, то цикл станет бесконечным,
      * а программа будет работать некорректно.
-     * Нужно добавить проверку входных параметров и прервать выполнение программы, если данные введены не верно.
+     * Нужно добавить проверку входных параметров и прервать выполнение
+     * программы, если данные введены не верно.
      * Далее вносим правки в метод.
      */
     public static void main(String[] args) {

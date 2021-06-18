@@ -21,7 +21,8 @@ public class Engineer extends Profession {
      * (родительского класса) и смогли обратиться к его параметрам.
      * А ниже инициализировали поля, которые есть в классе-наследнике - Engineer.
      */
-    public Engineer(String name, String surname, String education, LocalDate birthday, int experience) {
+    public Engineer(String name, String surname, String education,
+                    LocalDate birthday, int experience) {
         super(name, surname, education, birthday);
         this.experience = experience;
     }
