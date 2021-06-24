@@ -18,3 +18,8 @@ notifications:
       - mez365@mail.ru
     on_success: never # default: change
     on_failure: always # default: always
+env:
+
+      global:
+
+        - CODECOV_TOKEN="f668f690-af17-4847-ba5f-f92bb504c3e8"
