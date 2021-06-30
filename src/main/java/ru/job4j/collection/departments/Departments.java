@@ -1,9 +1,6 @@
 package ru.job4j.collection.departments;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Задача 2. Отсортировать департаменты.
@@ -30,7 +27,9 @@ public class Departments {
      * присваиваем пустой строке имя элемента (отдела)
      * {@code start = el}. Он не будет равен "",
      * поэтому выполнится второй блок тернарника -
-     * добавится имя_элемента/
+     * добавится имя_элемента/подотдел и т.д.
+     * Главной ошибкой было - не вынес манипуляции
+     * со сравнением и заменой в отдельную переменную.
      * @param deps список подразделений.
      * @return дополненный список подразделений.
      */
@@ -39,17 +38,26 @@ public class Departments {
         for (String value : deps) {
             String start = "";
             for (String el : value.split("/")) {
-                boolean adding = (start.equals("")) ? temp.add(start = el) : temp.add(start + "/" + el);
+                start = start.equals("") ? el : start + "/" + el;
+                temp.add(start);
              }
         }
         return new ArrayList<>(temp);
     }
 
+    /**
+     * Данный метод сортирует список по возрастанию.
+     * Внутри используется метод {@code Comparator.naturalOrder()}.
+     * Эта классическая сортировка по возрастанию.
+     * @param orgs список департаментов.
+     */
     public static void sortAsc(List<String> orgs) {
-
+        orgs.sort(Comparator.naturalOrder());
     }
 
     public static void sortDesc(List<String> orgs) {
+        for (String a : orgs) {
 
+        }
     }
 }
