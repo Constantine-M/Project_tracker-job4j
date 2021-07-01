@@ -22,7 +22,7 @@ public class DepDescComp implements Comparator<String> {
         first.addAll(Arrays.asList(o1.split("/")));
         second.addAll(Arrays.asList(o2.split("/")));
         return first.get(0) != second.get(0) ?
-                o1.compareTo(o2) :
-                o2.compareTo(o1);
+                o2.compareTo(o1) :
+                o1.compareTo(o2);
         }
 }
