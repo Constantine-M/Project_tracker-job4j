@@ -49,6 +49,9 @@ public class Departments {
      * Данный метод сортирует список по возрастанию.
      * Внутри используется метод {@code Comparator.naturalOrder()}.
      * Эта классическая сортировка по возрастанию.
+     * "natural order" класса Comparable определяется
+     * методом compareTo() -
+     * {@code obj1.compareTo(obj2)}.
      * @param orgs список департаментов.
      */
     public static void sortAsc(List<String> orgs) {
@@ -56,8 +59,6 @@ public class Departments {
     }
 
     public static void sortDesc(List<String> orgs) {
-        for (String a : orgs) {
-
-        }
+        orgs.sort(new DepDescComp());
     }
 }
