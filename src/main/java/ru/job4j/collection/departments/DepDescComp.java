@@ -17,12 +17,9 @@ public class DepDescComp implements Comparator<String> {
      */
     @Override
     public int compare(String o1, String o2) {
-        ArrayList<String> first = new ArrayList<>();
-        ArrayList<String> second = new ArrayList<>();
-        first.addAll(Arrays.asList(o1.split("/")));
-        second.addAll(Arrays.asList(o2.split("/")));
-        return first.get(0) != second.get(0) ?
-                o2.compareTo(o1) :
-                o1.compareTo(o2);
+        String[] left = o1.split("/");
+        String[] right = o2.split("/");
+        int rsl = o2.compareTo(o1);
+        return rsl == 0 ? o1.compareTo(o2) : rsl;
         }
 }
