@@ -6,6 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.*;
 
+/**
+ * Данный класс описывает применение 4 встроеных
+ * функциональных интерфейсов.
+ * 1. Supplier;
+ * 2. Consumer (BiConsumer);
+ * 3. Predicate (BiPredicate);
+ * 4. Function (BiFunction);
+ */
 public class FunctionalInterfaces {
     public static void main(String[] args) {
         Map<Integer, String> map = new HashMap<>();
@@ -17,7 +25,6 @@ public class FunctionalInterfaces {
         biCon.accept(5, "five");
         biCon.accept(6, "six");
         biCon.accept(7, "seven");
-        map.forEach(biCon);
 
         BiPredicate<Integer, String> biPred = (i, str) -> (i % 2 == 0 || str.length() == 4);
         for (Integer i : map.keySet()) {
