@@ -1,4 +1,4 @@
-package ru.job4j.function.StrategyPattern;
+package ru.job4j.function.strategypattern;
 
 
 import java.util.function.Function;

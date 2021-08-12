@@ -1,4 +1,4 @@
-package ru.job4j.function.StrategyPattern;
+package ru.job4j.function.strategypattern;
 
 import java.util.Objects;
 
@@ -33,8 +33,8 @@ public class Folder {
             return false;
         }
         Folder folder = (Folder) o;
-        return size == folder.size &&
-                Objects.equals(name, folder.name);
+        return size == folder.size
+                && Objects.equals(name, folder.name);
     }
 
     @Override
