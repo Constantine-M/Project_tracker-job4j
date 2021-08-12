@@ -20,6 +20,11 @@ public class FI {
      * Закомментированный код можно
      * сильно сократить, используя лямбду.
      * Ну и сделает код красивше).
+     * В одном из примеров необходимо
+     * отсортировать названия задач по номеру.
+     * А эти номера внутри строки.
+     * Ранее решали через {@code split},
+     * а теперь можно через {@code substring}.
      */
     public static void main(String[] args) {
         Attachment[] atts = {
@@ -27,7 +32,10 @@ public class FI {
                 new Attachment("image 3", 120),
                 new Attachment("image 2", 23)
         };
-        Comparator<Attachment> comparator = (left, right) -> left.getSize() - right.getSize();
+        Comparator<Attachment> comparator = (left, right) -> {
+            System.out.println("compare - " + left.getSize() + " : " + right.getSize());
+            return left.getSize() - right.getSize();
+        };
 
                 /*new Comparator<Attachment>() {
                     @Override
@@ -39,5 +47,16 @@ public class FI {
         Comparator<String> cmpText = (left, right) -> left.compareTo(right);
         Comparator<String> cmpDescSize = (left, right) -> right.length() - left.length();
         Arrays.sort(atts, comparator);
+
+        String[] numbers = {
+                "1. Task",
+                "2. Task",
+                "11. Task"
+        };
+        Comparator<String> numStr = (left, right) -> {
+            int first = Integer.valueOf(left.substring(0, left.indexOf(".")));
+            int second = Integer.valueOf(right.substring(0, right.indexOf(".")));
+            return first - second;
+        };
     }
 }
