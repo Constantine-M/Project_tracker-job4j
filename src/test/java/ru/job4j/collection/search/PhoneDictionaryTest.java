@@ -41,4 +41,15 @@ public class PhoneDictionaryTest {
         ArrayList<Person> persons = phones.find(key);
         Assert.assertTrue(persons.isEmpty());
     }
+
+    @Test
+    public void whenFindPersonBySurname() {
+        PhoneDictionary phones = new PhoneDictionary();
+        phones.add(
+                new Person("Lol", "Kek", "1111", "Internet")
+        );
+        String key = "Ke";
+        ArrayList<Person> persons = phones.find(key);
+        assertThat(persons.get(0).getSurname(), is("Kek"));
+    }
 }

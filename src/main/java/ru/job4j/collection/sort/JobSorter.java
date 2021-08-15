@@ -2,17 +2,41 @@ package ru.job4j.collection.sort;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+/**
+ * 6. Функции высшего порядка.
+ * Данный класс описывает варианты сортировки
+ * с использованием компаратора.
+ * А также класс используется как пример
+ * для объяснения функции высшего порядка.
+ * Функции высшего порядка - это функции,
+ * зависящие от других функций.
+ * В программировании функции высшего порядка
+ * описываются через композицию.
+ */
 public class JobSorter {
     /**
      * В классе Job мы переопределили метод compare to.
-     * Теперь сравнение будет происходит по той логике, которую мы опишем.
-     * На текущий момент метод сравнения работает по дефолту, т.к. мы используем метод сравнения в
+     * Теперь сравнение будет происходит по той
+     * логике, которую мы опишем.
+     * На текущий момент метод сравнения работает
+     * по дефолту, т.к. мы используем метод сравнения в
      * встроенных типах данных.
-     * А в последней строке мы уже переделали сортировку и придумали свою - по имени.
-     * Для этого использовали отдельный класс и переопределили нужные нам методы
-     * интерфейса Comparator.
+     * А в последней строке мы уже переделали сортировку
+     * и придумали свою - по имени.
+     * Для этого использовали отдельный класс и переопределили
+     * нужные нам методы интерфейса Comparator.
+     * 62 строка: В интерфейсе Comparator есть метод с
+     * реализацией по умолчанию  {@code thenComparing}.
+     * Этот метод принимает другой компаратор.
+     * Таким образом, можно соединить или
+     * скомбинировать любую сортировку.
+     * 76 строка: Чтобы вычислить значение combine, нужно
+     * сначала вычислить значение compareName,
+     * а потом comparePriority.
+     * Объект combine - это функция высшего порядка.
      */
     public static void main(String[] args) {
         List<Job> tasks = Arrays.asList(
@@ -33,16 +57,9 @@ public class JobSorter {
                 new Job("Fix bugzz", 2),
                 new Job("Task", 0)
         );
-        System.out.println("В интерфейсе Comparator есть метод с"
-                + System.lineSeparator() + " реализацией по " + System.lineSeparator()
-                + "умолчанию - thenComparing. Этот метод принимает "  + System.lineSeparator()
-                + " другой компаратор." + System.lineSeparator()
-                       + "Таким образом, можно соединить или " + System.lineSeparator()
-                + " скомбинировать любую сортировку.");
         Collections.sort(jobs, new JobDescByName().thenComparing(new JobDescByPriority()));
         System.out.println(jobs);
-        System.out.println("Создадим комбинированный компаратор: " + System.lineSeparator()
-                + "сортировка по длине имени, по имени и приоритету.");
+        System.out.println("Ниже комбинированный компаратор:");
         Collections.sort(jobs, new JobDescByNameLn()
                 .thenComparing(new JobDescByName()
                 .thenComparing(new JobDescByPriority())));
@@ -56,5 +73,9 @@ public class JobSorter {
         );
         Collections.sort(test, new JobAscByName());
         System.out.println(test);
+
+        Comparator<Job> compareName = Comparator.comparing(Job::getName);
+        Comparator<Job> comparePriority = Comparator.comparingInt(Job::getPriority);
+        Comparator<Job> combine = compareName.thenComparing(comparePriority);
     }
 }
