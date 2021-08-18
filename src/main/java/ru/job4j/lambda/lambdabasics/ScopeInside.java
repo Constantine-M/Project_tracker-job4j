@@ -28,7 +28,10 @@ public class ScopeInside {
      * По задаче (сложить числа массива) нужно
      * исправить ошибку. Она заключается в том,
      * что переменная {@code total} меняется
-     * внутри лямбда-выражения.
+     * внутри лямбда-выражения. Чтобы исправить,
+     * необходимо создать копию переменной
+     * {@code finalTotal} == самой переменной.
+     * Об этом нам в лоб намекает сама IDE.
      */
     public static void main(String[] args) {
             String ayyyy = "ayyyyy";
@@ -44,14 +47,12 @@ public class ScopeInside {
 
         int[] number = {1, 2, 3};
         int total = 0;
-//        for (int i = 0; i < number.length; i++) {
-//            int num = number[i];
-//            total = add(
-//                    () -> total + num
-//            );
-//        }
-        for (int element : number) {
-            total += element;
+        for (int i = 0; i < number.length; i++) {
+            int num = number[i];
+            int finalTotal = total;
+            total = add(
+                    () -> finalTotal + num
+            );
         }
         System.out.println(total);
     }
