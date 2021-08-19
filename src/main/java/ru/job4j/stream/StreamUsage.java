@@ -26,10 +26,10 @@ public class StreamUsage {
 
         @Override
         public String toString() {
-            return "Task{" +
-                    "name='" + name + '\'' +
-                    ", spent=" + spent +
-                    '}';
+            return "Task{"
+                    + "name='" + name + '\''
+                    + ", spent=" + spent
+                    + '}';
         }
     }
 
@@ -52,30 +52,42 @@ public class StreamUsage {
      * 7.{@code .reduce(0L, Long::sum)} -
      * каждое значение task.spent складывает
      * с начальным значением - 0L.
+     * 8.Stream конструкции принято переносить
+     * на новую строку. Так легче читать код!
      */
     public static void main(String[] args) {
         List<Task> tasks = List.of(
-                new Task("Bug #1", 100),
-                new Task("Task #2", 100),
-                new Task("Bug #3", 100)
+                new Task("Bug #1", 10),
+                new Task("Task #2", 20),
+                new Task("Bug #3", 40)
         );
+        System.out.println("Задача:");
+        tasks.stream()
+                .filter(task -> task.name.contains("Bug"))
+                .filter(task -> task.spent > 30)
+                .map(task -> task.name + " " + task.spent)
+                .forEach(System.out::println);
+
         System.out.println("1.Фильтрация:");
-        List<Task> bugs = tasks.stream().filter(
-                task -> task.name.contains("Bug")).collect(Collectors.toList());
+        List<Task> bugs = tasks.stream()
+                .filter(task -> task.name.contains("Bug"))
+                .collect(Collectors.toList());
         bugs.forEach(System.out::println);
         System.out.println("2.Преобразование:");
-        List<String> container = tasks.stream().map(
-                task -> task.name
-        ).collect(Collectors.toList());
+        List<String> container = tasks.stream()
+                .map(task -> task.name)
+                .collect(Collectors.toList());
+        container.forEach(System.out::println);
         System.out.println("3.Упрощение:");
-        long total = tasks.stream().map(
-                task -> task.spent
-        ).reduce(0L, Long::sum);
-
+        long total = tasks.stream()
+                .map(task -> task.spent)
+                .reduce(0L, Long::sum);
+        System.out.println(total);
+        System.out.println("Display only positive:");
         List<Integer> numbers = List.of(2, -9, 1, 4, 3, -5, 6);
-        List<Integer> positiveNum = numbers.stream().filter(
-                number -> number > 0
-        ).collect(Collectors.toList());
+        List<Integer> positiveNum = numbers.stream()
+                .filter(number -> number > 0)
+                .collect(Collectors.toList());
         positiveNum.forEach(System.out::println);
     }
 }
