@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.*;
 
 /**
  * 2. Список адресов.
+ * 3. Уникальность элементов и сортировка.
  */
 public class ProfilesTest {
 
@@ -19,6 +20,13 @@ public class ProfilesTest {
      * разных ссылок.
      * Метод {@code List.of()} делает
      * список неизменяемым.
+     * ОБРАТИ ВНИМАНИЕ - тест валился
+     * до тех пор пока я не скорректировал
+     * equals & hashcode. Выходит, что
+     * ранее происходило сравнение
+     * по всем полям. Все поля, кроме
+     * городов, были разные, поэтому
+     * программа думала, что дублей нет.
      */
     @Test
     public void whenCollectAddresses() {
@@ -36,6 +44,30 @@ public class ProfilesTest {
                 new Address("Tagil", "Lenina", 1, 111),
                 new Address("Ekb", "Malysheva", 12, 1),
                 new Address("SPb", "Nauki", 120, 777)
+        );
+        assertThat(result, is(expected));
+    }
+
+    @Test
+    public void whenCollectUniqueAddresses() {
+        Profiles prof = new Profiles();
+        Address firstAd = new Address("NYC", "Kosciuszko", 1127, 123);
+        Address secondAd = new Address("Detroit", "Russell", 2735, 1);
+        Address thirdAd = new Address("Compton", "ArtesiaBlvd", 1111, 43);
+        Address fourthAd = new Address("Detroit", "VanDykeSt", 11851, 66);
+        Address fifthAd = new Address("NYC", "34thSt", 20, 888);
+        List<Profile> profiles = List.of(
+                new Profile(firstAd),
+                new Profile(secondAd),
+                new Profile(thirdAd),
+                new Profile(fourthAd),
+                new Profile(fifthAd)
+        );
+        List<Address> result = prof.collectUniqSortedList(profiles);
+        List<Address> expected = List.of(
+                new Address("Compton", "ArtesiaBlvd", 1111, 43),
+                new Address("Detroit", "Russell", 2735, 1),
+                new Address("NYC", "Kosciuszko", 1127, 123)
         );
         assertThat(result, is(expected));
     }
