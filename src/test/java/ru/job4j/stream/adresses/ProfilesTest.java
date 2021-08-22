@@ -27,6 +27,9 @@ public class ProfilesTest {
      * по всем полям. Все поля, кроме
      * городов, были разные, поэтому
      * программа думала, что дублей нет.
+     * UPD: в общем, надо было сделать
+     * одинаковые адреса (чтоб один-в-один),
+     * а город - это для сортировки похоже.
      */
     @Test
     public void whenCollectAddresses() {
@@ -54,8 +57,8 @@ public class ProfilesTest {
         Address firstAd = new Address("NYC", "Kosciuszko", 1127, 123);
         Address secondAd = new Address("Detroit", "Russell", 2735, 1);
         Address thirdAd = new Address("Compton", "ArtesiaBlvd", 1111, 43);
-        Address fourthAd = new Address("Detroit", "VanDykeSt", 11851, 66);
-        Address fifthAd = new Address("NYC", "34thSt", 20, 888);
+        Address fourthAd = new Address("Detroit", "Russell", 2735, 1);
+        Address fifthAd = new Address("NYC", "Kosciuszko", 1127, 123);
         List<Profile> profiles = List.of(
                 new Profile(firstAd),
                 new Profile(secondAd),

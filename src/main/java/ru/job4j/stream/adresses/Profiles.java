@@ -36,7 +36,7 @@ public class Profiles {
     public List<Address> collectUniqSortedList(List<Profile> profiles) {
         return profiles.stream()
                 .map(Profile::getAddress)
-                .sorted(new AddressCmp())
+                .sorted(Comparator.comparing(Address::getCity))
                 .distinct()
                 .collect(Collectors.toList());
     }
