@@ -1,8 +1,6 @@
 package ru.job4j.stream.adresses;
 
 import org.junit.Test;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -34,14 +32,9 @@ public class ProfilesTest {
                 new Profile(thirdAd)
         );
         List<Address> result = prof.collect(profiles);
-        List<Address> expected = new ArrayList<>();
-        expected.add(
-                new Address("Tagil", "Lenina", 1, 111)
-        );
-        expected.add(
-                new Address("Ekb", "Malysheva", 12, 1)
-        );
-        expected.add(
+        List<Address> expected = List.of(
+                new Address("Tagil", "Lenina", 1, 111),
+                new Address("Ekb", "Malysheva", 12, 1),
                 new Address("SPb", "Nauki", 120, 777)
         );
         assertThat(result, is(expected));
