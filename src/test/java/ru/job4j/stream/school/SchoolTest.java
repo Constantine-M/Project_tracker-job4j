@@ -3,7 +3,9 @@ package ru.job4j.stream.school;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 import static org.junit.Assert.*;
@@ -89,5 +91,35 @@ public class SchoolTest {
         expected.add(new Student(30, "Polkiss"));
         expected.add(new Student(49, "Jackson"));
         assertThat(rsl, is(expected));
+    }
+
+    @Test
+    public void whenCollectClassToMap() {
+        List<Student> students = List.of(
+                new Student(23, "Skywalker"),
+                new Student(49, "Organa"),
+                new Student(23, "Skywalker"),
+                new Student(11, "Solo"),
+                new Student(96, "Lars"),
+                new Student(29, "Sifo-Dyas"),
+                new Student(77, "Kenobi"),
+                new Student(11, "Solo"),
+                new Student(89, "Windu"),
+                new Student(66, "Bane"),
+                new Student(99, "Palpatine")
+        );
+        School school = new School();
+        Map<String, Student> result = school.collectToMap(students);
+        Map<String, Student> expected = new HashMap<>();
+        expected.put("Skywalker", new Student(23, "Skywalker"));
+        expected.put("Organa", new Student(49, "Organa"));
+        expected.put("Solo", new Student(11, "Solo"));
+        expected.put("Lars", new Student(96, "Lars"));
+        expected.put("Sifo-Dyas", new Student(29, "Sifo-Dyas"));
+        expected.put("Kenobi", new Student(77, "Kenobi"));
+        expected.put("Windu", new Student(89, "Windu"));
+        expected.put("Bane", new Student(66, "Bane"));
+        expected.put("Palpatine", new Student(99, "Palpatine"));
+        assertThat(result, is(expected));
     }
 }

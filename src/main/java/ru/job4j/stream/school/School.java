@@ -1,6 +1,7 @@
 package ru.job4j.stream.school;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -29,5 +30,40 @@ public class School {
         return students.stream()
                 .filter(predict)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Данный метод преобразует список
+     * учеников в карту, где ключ -
+     * это Фамилия ученика.
+     * Т.к. в списке были дублирующие
+     * записи, был использован метод
+     * {@code distinct()} и тест
+     * успешно завершался. Также в JavaDoc пишут:
+     * If the mapped keys
+     * might have duplicates, use {@code toMap(
+     * Function, Function, BinaryOperator)} instead.
+     * Под {@code BinaryOperator} означает,
+     * что здесь мы должны придумать
+     * функцию, которая позволит нам
+     * исключить дубликат ключа.
+     * Например, мы можем выбрать наименьшее значение
+     * из этих 2х ключей. Свой вариант я
+     * закомментировал - он не поддается объяснению.
+     * По умолчанию метод {@code toMap}
+     * возвращает HashMap!
+     * Если нужна другая карта, то используй
+     * {@code #toMap(Function, Function,
+     * BinaryOperator, Supplier)}.
+     * @param students список студентов.
+     * @return карту студентов.
+     */
+    public Map<String, Student> collectToMap(List<Student> students) {
+        return students.stream()
+                .distinct()
+                .collect(Collectors.toMap(
+                        Student::getSurname,
+                        student -> student));
+//                        (student, student2) -> student));
     }
 }
