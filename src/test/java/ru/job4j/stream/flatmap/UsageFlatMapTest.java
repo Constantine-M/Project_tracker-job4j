@@ -25,7 +25,7 @@ public class UsageFlatMapTest {
         };
         List<Integer> result = toList.convert(matrix);
         List<Integer> expected = List.of(
-                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,15, 16);
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
         assertThat(result, is(expected));
     }
 
