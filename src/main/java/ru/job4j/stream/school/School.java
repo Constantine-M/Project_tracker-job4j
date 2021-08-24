@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 /**
  * 1. Фильтрация учеников.
+ * 4. Преобразование List в Map.
  * Данный класс описывает школу
  * и все что в ней происходит.
  */
@@ -48,22 +49,21 @@ public class School {
      * функцию, которая позволит нам
      * исключить дубликат ключа.
      * Например, мы можем выбрать наименьшее значение
-     * из этих 2х ключей. Свой вариант я
-     * закомментировал - он не поддается объяснению.
+     * из этих 2х ключей. В нашем случае
+     * из 2х ключей я просто выбрал первый.
      * По умолчанию метод {@code toMap}
      * возвращает HashMap!
      * Если нужна другая карта, то используй
      * {@code #toMap(Function, Function,
      * BinaryOperator, Supplier)}.
      * @param students список студентов.
-     * @return карту студентов.
+     * @return карта студентов.
      */
     public Map<String, Student> collectToMap(List<Student> students) {
         return students.stream()
-                .distinct()
                 .collect(Collectors.toMap(
                         Student::getSurname,
-                        student -> student));
-//                        (student, student2) -> student));
+                        student -> student,
+                        (student, student2) -> student));
     }
 }
