@@ -4,6 +4,8 @@ import java.util.*;
 
 /**
  * 3. Банковские переводы.
+ * 6. Тестовое задание из модуля коллекции
+ * Lite переделать на Stream API.
  * Данный класс описывает банковский сервис - его максимально упрощенная версия.
  * @author Constantine
  * @version 1.0
@@ -35,8 +37,8 @@ public class BankService {
      * 2.Спрашиваем, содержится ли у ключевого элемента user в списке счетов
      * нужный нам счет {@link Account account}, который мы передали в метод.
      * 3.Если не содержится, то добавляем значение счета в связку с указанным ключом.
-     * @param passport поле класса {@link User#passport}.
-     * @param account объект класса {@link Account}.
+     * @param passport паспорт пользователя.
+     * @param account банковский счет пользователя..
      */
     public void addAccount(String passport, Account account) {
         User user = findByPassport(passport);
@@ -53,17 +55,17 @@ public class BankService {
      * нужные нам параметры - паспорт и ФИО.
      * Мы проходим циклом по ключам и сравниваем поле {@code passport}
      * с данными, которые передаем в метод.
+     * А потом мы переписали все на Stream API.
      * @param passport номер паспорта.
      * @return пользователя по данным паспорта
      * или null, если ничего не найдено.
      */
     public User findByPassport(String passport) {
-        for (User user : users.keySet()) {
-            if (user.getPassport().equals(passport)) {
-                return user;
-            }
-        }
-        return null;
+        return users.keySet()
+                .stream()
+                .filter(user -> user.getPassport().equals(passport))
+                .findFirst()
+                .orElse(null);
     }
 
     /**
@@ -72,6 +74,7 @@ public class BankService {
      * Здесь его не используем.
      * В цикле мы проходим по счетам пользователя. Когда находим, что
      * реквизиты совпадают, то просто возвращаем счет. Нам ведь его и нужно найти.
+     * А потом мы переписали все на Stream API.
      * @param passport номер паспорта.
      * @param requisite номер счета.
      * @return возвращает счет пользователя
@@ -79,13 +82,12 @@ public class BankService {
      */
     public Account findByRequisite(String passport, String requisite) {
         User user = findByPassport(passport);
-        List<Account> userAccount = users.get(user);
         if (user != null) {
-            for (Account s : userAccount) {
-                if (s.getRequisite().equals(requisite)) {
-                    return s;
-                }
-            }
+            return users.get(user)
+                    .stream()
+                    .filter(usr -> usr.getRequisite().equals(requisite))
+                    .findFirst()
+                    .orElse(null);
         }
         return null;
     }
