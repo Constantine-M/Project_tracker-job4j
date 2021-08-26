@@ -27,9 +27,23 @@ public class Card {
     private Suit suit;
     private Value value;
 
+    /**
+     * Данный конструктор здесь не просто так.
+     * Помни, что нам нужно создать
+     * карточную колоду. 2 стрима мы
+     * объединяли как раз для этого.
+     */
     public Card(Suit suit, Value value) {
         this.suit = suit;
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return "Card{"
+                + "suit=" + suit
+                + ", value=" + value
+                + '}';
     }
 
     /**
@@ -51,14 +65,16 @@ public class Card {
      * одноуровневый.
      * 3.Далее с единственным (сглаженным) потоком
      * мы производим преобразование с помощью
-     * метода {@code map()}, а именно сопоставить
-     * элементы 2х классов (перетасовать карты в колоде).
+     * метода {@code map()}, а именно создаем
+     * колоду карт (ведь ее у нас не было).
+     * У нас был только констуктор этой колоды.
+     * Нужно было колоду сгенерировать.
      * 4.Выводим получившееся на консоль.
      */
     public static void main(String[] args) {
         Stream.of(Suit.values())
                 .flatMap(s -> Stream.of(Value.values())
-                        .map(val -> s + " " + val))
+                        .map(v -> new Card(s, v)))
                 .forEach(System.out::println);
     }
 }
