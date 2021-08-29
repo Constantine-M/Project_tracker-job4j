@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -18,7 +19,7 @@ public class OrderConvertTest {
      */
     @Test
     public void process() {
-        List<Order> orders = Arrays.asList(
+        List<Order> orders = List.of(
                 new Order("1", "cheese"),
                 new Order("2", "eggs"),
                 new Order("3", "milk")
@@ -33,13 +34,13 @@ public class OrderConvertTest {
      */
     @Test
     public void whenCompareMaps() {
-        List<Order> orders = Arrays.asList(
+        List<Order> orders = List.of(
                 new Order("1", "cheese"),
                 new Order("2", "eggs"),
                 new Order("3", "milk")
         );
         HashMap<String, Order> map = OrderConvert.process(orders);
-        HashMap<String, Order> expected = OrderConvert.process(orders);
+        HashMap<String, Order> expected = new HashMap<>();
         expected.put("1", new Order("1", "cheese"));
         expected.put("2", new Order("2", "eggs"));
         expected.put("3", new Order("3", "milk"));
@@ -54,13 +55,13 @@ public class OrderConvertTest {
      */
     @Test
     public void whenNumberIsDublicate() {
-        List<Order> orders = Arrays.asList(
+        List<Order> orders = List.of(
                 new Order("1", "cheese"),
                 new Order("1", "eggs"),
                 new Order("3", "milk")
         );
         HashMap<String, Order> map = OrderConvert.process(orders);
-        HashMap<String, Order> expected = OrderConvert.process(orders);
+        HashMap<String, Order> expected = new HashMap<>();
         expected.put("1", new Order("1", "eggs"));
         expected.put("3", new Order("3", "milk"));
         assertThat(map, is(expected));
