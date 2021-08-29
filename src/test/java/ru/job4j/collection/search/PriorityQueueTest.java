@@ -8,7 +8,7 @@ public class PriorityQueueTest {
 
     @Test
     public void whenUrgentIsHighPriority() {
-        PriorityQueue queue = new PriorityQueue();
+        var queue = new PriorityQueue();
         queue.put(new Task("Low", 5));
         queue.put(new Task("Urgent", 1));
         queue.put(new Task("Medium", 3));

@@ -3,6 +3,7 @@ package ru.job4j.collection.search;
 import java.util.LinkedList;
 
 /**
+ * 2. Local-Variable Type Inference (var).
  * Данный класс связан с задачей "Очередь с приоритетом на LinkedList".
  * Он описывает работу простейшей очереди по приоритету, которая работает
  * по принципу FIFO (first in - first out)
@@ -28,8 +29,8 @@ public class PriorityQueue {
      * @param task задача которая добавляется в очередь
      */
     public void put(Task task) {
-        int index = 0;
-        for (Task element : tasks) {
+        var index = 0;
+        for (var element : tasks) {
             if (element.getPriority() < task.getPriority()) {
                 index++;
                 break;

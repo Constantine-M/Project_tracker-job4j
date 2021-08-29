@@ -18,11 +18,11 @@ public class PhoneDictionaryTest {
      */
     @Test
     public void whenFindPersonByName() {
-        PhoneDictionary phones = new PhoneDictionary();
+        var phones = new PhoneDictionary();
         phones.add(
                 new Person("Const", "Mezenin", "8752", "VTagil")
         );
-        String key = "Con";
+        var key = "Con";
         ArrayList<Person> persons = phones.find(key);
         assertThat(persons.get(0).getName(), is("Const"));
     }
@@ -33,22 +33,22 @@ public class PhoneDictionaryTest {
      */
     @Test
     public void whenNotFindPersonThenEmpty() {
-        PhoneDictionary phones = new PhoneDictionary();
+        var phones = new PhoneDictionary();
         phones.add(
                 new Person("Const", "Mezenin", "8752", "VTagil")
         );
-        String key = "123";
+        var key = "123";
         ArrayList<Person> persons = phones.find(key);
         Assert.assertTrue(persons.isEmpty());
     }
 
     @Test
     public void whenFindPersonBySurname() {
-        PhoneDictionary phones = new PhoneDictionary();
+        var phones = new PhoneDictionary();
         phones.add(
                 new Person("Lol", "Kek", "1111", "Internet")
         );
-        String key = "Ke";
+        var key = "Ke";
         ArrayList<Person> persons = phones.find(key);
         assertThat(persons.get(0).getSurname(), is("Kek"));
     }

@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 /**
  * 6. Функции высшего порядка.
+ * 2. Local-Variable Type Inference (var).
  * Составим модель справочника.
  */
 public class PhoneDictionary {
@@ -26,21 +27,19 @@ public class PhoneDictionary {
      * В учебных целях оставлю старый блок кода.
      * В данном методе мы блок с условиями
      * заменили на функцию высшего порядка.
+     * А в дальнейшем, для упрощения,
+     * использовали тип {@code var}.
      * @param key Ключ поиска.
      * @return Список подошедших пользователей.
      */
     public ArrayList<Person> find(String key) {
         ArrayList<Person> result = new ArrayList<>();
-        Predicate<Person> namePred = (Person user)
-                -> user.getName().contains(key);
-        Predicate<Person> surnamePred = (Person user)
-                -> user.getSurname().contains(key);
-        Predicate<Person> phonePred = (Person user)
-                -> user.getPhone().contains(key);
-        Predicate<Person> addressPred = (Person user)
-                -> user.getAddress().contains(key);
+        Predicate<Person> namePred = (var user) -> user.getName().contains(key);
+        Predicate<Person> surnamePred = (var user) -> user.getSurname().contains(key);
+        Predicate<Person> phonePred = (var user) -> user.getPhone().contains(key);
+        Predicate<Person> addressPred = (var user) -> user.getAddress().contains(key);
         Predicate<Person> combine = namePred.or(surnamePred).or(phonePred).or(addressPred);
-        for (Person client : persons) {
+        for (var client : persons) {
             if (combine.test(client)) {
                 result.add(client);
             }
