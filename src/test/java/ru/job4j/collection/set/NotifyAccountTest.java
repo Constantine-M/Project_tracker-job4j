@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -24,7 +25,7 @@ public class NotifyAccountTest {
                 new Account("123", "ConstaM", "1000000"),
                 new Account("456", "Batman", "99999999999")
         );
-        HashSet<Account> expected = new HashSet<>(List.of(
+        HashSet<Account> expected = new HashSet<>(Set.of(
                 new Account("123", "Consta", "1000"),
                 new Account("456", "Batman", "99999999999")
         ));
@@ -38,7 +39,7 @@ public class NotifyAccountTest {
                 new Account("142", "Petr Arsentev", "000001")
         );
         HashSet<Account> expect = new HashSet<>(
-                List.of(
+                Set.of(
                         new Account("123", "Petr Arsentev", "eDer3432f"),
                         new Account("142", "Petr Arsentev", "000001")
                 )

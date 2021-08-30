@@ -22,7 +22,7 @@ public class FullSearchTest {
         tasks.add(new Task("1", "task1"));
         tasks.add(new Task("2", "task2"));
         tasks.add(new Task("3", "task3"));
-        Set<String> expected = new HashSet<>(List.of("1", "2", "3"));
+        Set<String> expected = new HashSet<>(Set.of("1", "2", "3"));
         assertThat(FullSearch.extractNumber(tasks), is(expected));
     }
 
@@ -41,7 +41,7 @@ public class FullSearchTest {
         tasks.add(new Task("3", "task3"));
         tasks.add(new Task("4", "task4"));
         tasks.add(new Task("5", "task4"));
-        Set<String> expected = new HashSet<>(List.of("1", "2", "3", "4", "5"));
+        Set<String> expected = new HashSet<>(Set.of("1", "2", "3", "4", "5"));
         assertThat(FullSearch.extractNumber(tasks), is(expected));
     }
 }
