@@ -34,10 +34,10 @@ public class PhoneDictionary {
      */
     public ArrayList<Person> find(String key) {
         ArrayList<Person> result = new ArrayList<>();
-        Predicate<Person> namePred = (var user) -> user.getName().contains(key);
-        Predicate<Person> surnamePred = (var user) -> user.getSurname().contains(key);
-        Predicate<Person> phonePred = (var user) -> user.getPhone().contains(key);
-        Predicate<Person> addressPred = (var user) -> user.getAddress().contains(key);
+        Predicate<Person> namePred = user -> user.getName().contains(key);
+        Predicate<Person> surnamePred = user -> user.getSurname().contains(key);
+        Predicate<Person> phonePred = user -> user.getPhone().contains(key);
+        Predicate<Person> addressPred = user -> user.getAddress().contains(key);
         Predicate<Person> combine = namePred.or(surnamePred).or(phonePred).or(addressPred);
         for (var client : persons) {
             if (combine.test(client)) {
