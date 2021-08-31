@@ -1,6 +1,7 @@
 package ru.job4j.stream.college;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -33,44 +34,43 @@ public class College {
      * @param account идентификатор.
      * @return студент.
      */
-    public Student findByAccount(String account) {
+    public Optional<Student> findByAccount(String account) {
         return students.keySet()
                 .stream()
                 .filter(student -> student.getAccount().equals(account))
-                .findFirst()
-                .orElse(null);
+                .findFirst();
     }
 
     /**
      * Данный метод находит оценку по предмету.
      * В метод передаем идентификатор и
      * наименование предмета.
+     * P.S.Все переписали на Optional.
+     * 1.При нахождении студента возвращаем
+     * {@link Optional}, у которого есть
+     * метод {@code get()}. Этот метод
+     * возвращает значение {@link Optional},
+     * т.е. в нашем случае объект {@link Student}.
+     * 2.Проверяем, что наш {@link Optional}
+     * не пустой. Если так, то начинаем проход
+     * по коллекции студентов
+     * {@code students.get(optStudent.get())}.
+     * 3.Фильтруем по имени.
+     * 4.Возвращаем первое совпадаение.
+     * Метод {@code findFirst()}
+     * возвращает {@link Optional}.
      * @param account идентификаторю
      * @param name имя предмета.
      * @return оценка по предмету.
      */
-    public Subject findBySubjectName(String account, String name) {
-        Student a = findByAccount(account);
-        if (a != null) {
-            return students.get(a)
+    public Optional<Subject> findBySubjectName(String account, String name) {
+        Optional<Student> optStudent = findByAccount(account);
+        if (optStudent.isPresent()) {
+            return students.get(optStudent.get())
                     .stream()
-                    .filter(s -> s.getName().equals(name))
-                    .findFirst()
-                    .orElse(null);
+                    .filter(stud -> stud.getName().equals(name))
+                    .findFirst();
         }
-        return null;
-    }
-
-    public static void main(String[] args) {
-        Map<Student, Set<Subject>> students = Map.of(new Student("Student", "000001", "201-18-15"),
-                Set.of(
-                        new Subject("Math", 70),
-                        new Subject("English", 85)
-                ));
-        College college = new College(students);
-        Student student = college.findByAccount("000001");
-        System.out.println("Найденный студент: " + student);
-        Subject english = college.findBySubjectName("000001", "English");
-        System.out.println("Оценка по найденному предмету: " + english.getScore());
+        return Optional.empty();
     }
 }
