@@ -6,6 +6,7 @@ import java.util.*;
  * 3. Банковские переводы.
  * 6. Тестовое задание из модуля коллекции
  * Lite переделать на Stream API.
+ * 4. Optional в Stream API.
  * Данный класс описывает банковский сервис - его максимально упрощенная версия.
  * @author Constantine
  * @version 1.0
@@ -32,18 +33,28 @@ public class BankService {
     /**
      * Данный метод добавляет счет к пользователю.
      * 1.Находим пользователя.
-     * 1.1.Лучше вынести список счетов пользователя в отдельную переменную, чтобы не копировать
+     * 1.1.Лучше вынести список счетов пользователя
+     * в отдельную переменную, чтобы не копировать
      * код и не искать дважды.
-     * 2.Спрашиваем, содержится ли у ключевого элемента user в списке счетов
-     * нужный нам счет {@link Account account}, который мы передали в метод.
-     * 3.Если не содержится, то добавляем значение счета в связку с указанным ключом.
+     * 2.Спрашиваем, содержится ли у ключевого
+     * элемента user в списке счетов
+     * нужный нам счет {@link Account account},
+     * который мы передали в метод.
+     * 3.Если не содержится, то добавляем значение
+     * счета в связку с указанным ключом.
+     * В блоке "if" проверка на null уже
+     * не нужна, т.к. она уже осуществляется здесь
+     * {@code users.get(user.get()}. Это можно
+     * понять, почитав доки:
+     * If a value is present, returns the value, otherwise throws
+     * {@code NoSuchElementException}.
      * @param passport паспорт пользователя.
-     * @param account банковский счет пользователя..
+     * @param account банковский счет пользователя.
      */
     public void addAccount(String passport, Account account) {
-        User user = findByPassport(passport);
-        List<Account> listAccount = users.get(user);
-        if (user != null && !listAccount.contains(account)) {
+        Optional<User> user = findByPassport(passport);
+        List<Account> listAccount = users.get(user.get());
+        if (!listAccount.contains(account)) {
             listAccount.add(account);
         }
     }
@@ -55,17 +66,20 @@ public class BankService {
      * нужные нам параметры - паспорт и ФИО.
      * Мы проходим циклом по ключам и сравниваем поле {@code passport}
      * с данными, которые передаем в метод.
-     * А потом мы переписали все на Stream API.
+     * А потом мы переписали все на Stream API
+     * с использованием {@link Optional},
+     * т.к. данный класс делает наш код
+     * более безопасным (null-safety) и
+     * читабельным.
      * @param passport номер паспорта.
      * @return пользователя по данным паспорта
      * или null, если ничего не найдено.
      */
-    public User findByPassport(String passport) {
+    public Optional<User> findByPassport(String passport) {
         return users.keySet()
                 .stream()
                 .filter(user -> user.getPassport().equals(passport))
-                .findFirst()
-                .orElse(null);
+                .findFirst();
     }
 
     /**
@@ -74,22 +88,25 @@ public class BankService {
      * Здесь его не используем.
      * В цикле мы проходим по счетам пользователя. Когда находим, что
      * реквизиты совпадают, то просто возвращаем счет. Нам ведь его и нужно найти.
-     * А потом мы переписали все на Stream API.
+     * А потом мы переписали все на Stream API
+     * с использованием {@link Optional},
+     * т.к. данный класс делает наш код
+     * более безопасным (null-safety) и
+     * читабельным.
      * @param passport номер паспорта.
      * @param requisite номер счета.
      * @return возвращает счет пользователя
      * по введеным реквизитам или null, если таковой не найден.
      */
-    public Account findByRequisite(String passport, String requisite) {
-        User user = findByPassport(passport);
-        if (user != null) {
-            return users.get(user)
+    public Optional<Account> findByRequisite(String passport, String requisite) {
+        Optional<User> user = findByPassport(passport);
+        if (user.isPresent()) {
+            return users.get(user.get())
                     .stream()
                     .filter(usr -> usr.getRequisite().equals(requisite))
-                    .findFirst()
-                    .orElse(null);
+                    .findFirst();
         }
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -105,11 +122,13 @@ public class BankService {
     public boolean transferMoney(String srcPassport, String srcRequisite,
                                  String destPassport, String destRequisite, double amount) {
         boolean rsl = false;
-        Account srcAccount = findByRequisite(srcPassport, srcRequisite);
-        Account destAccount = findByRequisite(destPassport, destRequisite);
-        if (destAccount != null && srcAccount != null && srcAccount.getBalance() >= amount) {
-            srcAccount.setBalance(srcAccount.getBalance() - amount);
-            destAccount.setBalance((destAccount.getBalance() + amount));
+        Optional<Account> srcAccount = findByRequisite(srcPassport, srcRequisite);
+        Optional<Account> destAccount = findByRequisite(destPassport, destRequisite);
+        if (destAccount.isPresent()
+                && srcAccount.isPresent()
+                && srcAccount.get().getBalance() >= amount) {
+            srcAccount.get().setBalance(srcAccount.get().getBalance() - amount);
+            destAccount.get().setBalance((destAccount.get().getBalance() + amount));
             rsl = true;
         }
         return rsl;
