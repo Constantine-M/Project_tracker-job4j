@@ -42,19 +42,16 @@ public class BankService {
      * который мы передали в метод.
      * 3.Если не содержится, то добавляем значение
      * счета в связку с указанным ключом.
-     * В блоке "if" проверка на null уже
-     * не нужна, т.к. она уже осуществляется здесь
-     * {@code users.get(user.get()}. Это можно
-     * понять, почитав доки:
-     * If a value is present, returns the value, otherwise throws
-     * {@code NoSuchElementException}.
      * @param passport паспорт пользователя.
      * @param account банковский счет пользователя.
      */
     public void addAccount(String passport, Account account) {
         Optional<User> user = findByPassport(passport);
-        List<Account> listAccount = users.get(user.get());
-        if (user.isPresent() && !listAccount.contains(account)) {
+        List<Account> listAccount = new ArrayList<>();
+        if (user.isPresent()) {
+            listAccount = users.get(user.get());
+        }
+        if (!listAccount.contains(account)) {
             listAccount.add(account);
         }
     }
