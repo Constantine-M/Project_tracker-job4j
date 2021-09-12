@@ -66,27 +66,21 @@ public class AnalyzeTest {
         )));
     }
 
-    /**
-     * Когда баллы одинаковые,
-     * идет сравнение имен предметов
-     * судя по всему, потому что
-     * тест выше не проходит.
-     */
     @Test
     public void whenListOfSubjectAverageForOtherPupil() {
         List<Tuple> average = Analyze.averageScoreByPupil(
                 List.of(
                         new Pupil("Bella", List.of(
-                                new Subject("Biology", 100),
-                                new Subject("Astrology", 100))),
+                                new Subject("Biology", 50),
+                                new Subject("Astrology", 10))),
                         new Pupil("Anna", List.of(
-                                new Subject("Biology", 0),
-                                new Subject("Astrology", 0)))
+                                new Subject("Biology", 60),
+                                new Subject("Astrology", 20)))
                 ).stream()
         );
         assertThat(average, is(List.of(
-                new Tuple("Astrology", 50D),
-                new Tuple("Biology", 50D)
+                new Tuple("Biology", 55D),
+                new Tuple("Astrology", 15D)
         )));
     }
 

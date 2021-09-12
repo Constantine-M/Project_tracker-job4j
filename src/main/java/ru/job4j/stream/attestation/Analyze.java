@@ -1,6 +1,7 @@
 package ru.job4j.stream.attestation;
 
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -51,6 +52,10 @@ public class Analyze {
      * Этот метод как раз возвращает карту {@link Map},
      * где ключ - это имя предмета, а значение -
      * это средний балл по этому предмету для каждого ученика.
+     * В нашей задаче есть нюанс - порядок добавления
+     * предметов должен быть сохраненю Для этого
+     * дополнительно передадим в метод ссылку
+     * на конструктор {@link LinkedHashMap}.
      * 3.Чтобы пройтись по {@link Map} используем
      * метод {@code entrySet()}. Он возвращает
      * набор ключ-значений.
@@ -70,7 +75,7 @@ public class Analyze {
         return stream
                 .flatMap(pupil -> pupil.getSubjects().stream())
                 .collect(Collectors.groupingBy(Subject::getName,
-                        Collectors.averagingDouble(Subject::getScore)))
+                        LinkedHashMap::new, Collectors.averagingDouble(Subject::getScore)))
                 .entrySet().stream()
                 .map(entry -> new Tuple(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
