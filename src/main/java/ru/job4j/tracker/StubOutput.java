@@ -1,9 +1,13 @@
 package ru.job4j.tracker;
 
 /**
- * Данный класс является заглушкой. Он, как и StubInput, будет использоваться для тестов.
+ * Данный класс является заглушкой.
+ *
+ * Он, как и {@link StubInput},
+ * будет использоваться для тестов.
  */
 public class StubOutput implements Output {
+
     private final StringBuilder buffer = new StringBuilder();
 
     @Override

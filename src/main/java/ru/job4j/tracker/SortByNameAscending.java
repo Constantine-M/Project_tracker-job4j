@@ -3,9 +3,11 @@ package ru.job4j.tracker;
 import java.util.Comparator;
 
 /**
- * В данном классе описывается сортировка по возрастанию.
+ * В данном классе описывается
+ * сортировка по возрастанию.
  */
 public class SortByNameAscending implements Comparator<Item> {
+
     @Override
     public int compare(Item first, Item second) {
         return first.getName().compareTo(second.getName());
