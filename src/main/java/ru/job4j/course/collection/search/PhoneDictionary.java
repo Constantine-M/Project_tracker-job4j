@@ -43,10 +43,10 @@ public class PhoneDictionary {
             if (combine.test(client)) {
                 result.add(client);
             }
-//            if (client.getName().contains(key) || client.getSurname().contains(key)
-//                    || client.getPhone().contains(key) || client.getAddress().contains(key)) {
-//                result.add(client);
-//            }
+            /*if (client.getName().contains(key) || client.getSurname().contains(key)
+                    || client.getPhone().contains(key) || client.getAddress().contains(key)) {
+                result.add(client);
+            }*/
         }
         return result;
     }

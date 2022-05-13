@@ -37,8 +37,8 @@ public class ScopeInside {
             String ayyyy = "ayyyyy";
             String name = echo(
                     () -> {
-//                    String ayyyy = "ayyyyyyyy";
-//                    ayyyy = ayyyy + ", People.";
+                    /*String ayyyy = "ayyyyyyyy";
+                    ayyyy = ayyyy + ", People.";*/
                     return ayyyy;
                     }
             );
