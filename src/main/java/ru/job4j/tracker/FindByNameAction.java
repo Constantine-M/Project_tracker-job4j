@@ -58,7 +58,7 @@ public class FindByNameAction implements UserAction {
      * иначе сообщение о том, что ничего не найдено.
      */
     @Override
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean execute(Input input, Store tracker) {
         String nameRec = input.askStr("Enter record name: ");
         List<Item> records = tracker.findByName(nameRec);
         if (records.size() > 0) {

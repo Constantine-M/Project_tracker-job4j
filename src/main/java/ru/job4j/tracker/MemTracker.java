@@ -3,13 +3,20 @@ package ru.job4j.tracker;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tracker {
+/**
+ * Данный класс описывает основные
+ * механизмы работы трекера.
+ *
+ * MemTracker - значит, что данные
+ * хранятся в памяти.
+ */
+public class MemTracker implements Store {
 
     /**
      * Данное поле содержит кол-во заявлений.
      * Оно ограничено 100 позиций.
      *
-     * UPDATE
+     * UPDATE COLLECTION
      * Теперь мы используем коллекции.
      * В дальнейшем управление index
      * будет происходит внутри коллекции.
@@ -29,13 +36,14 @@ public class Tracker {
      * используем последовательность
      * (то есть просто увеличиваем на 1).
      *
-     * UPDATE
+     * UPDATE COLLECTION
      * Теперь добавление заявки будет
      * осуществляться методом {@link List#add}.
      *
-     * @param item заявка
-     * @return обновленный массив заявок.
+     * @param item заявка.
+     * @return добавленная заявка {@link Item}.
      */
+    @Override
     public Item add(Item item) {
         item.setId(ids++);
         items.add(item);
@@ -43,38 +51,65 @@ public class Tracker {
     }
 
     /**
-     * Метод находит заявку по id.
+     * Данный метод позволяет заменить заявки.
      *
-     * 1.Проверяем все элементы массива
-     * items (все заявки).
+     * Но сначала нам нужно найти ячейку,
+     * поэтому ниже прописали метод
+     * для нахождения номера ячейки (индекса).
      *
-     * 2.Сравниваем их с номером id
-     * (используя метод {@link Item#getId()})
-     * и возвращаем найденный {@link Item}
-     * (у нас мы назвали rslItem).
+     * Создается объект {@link Item} с id = 0.
+     * А нам нужно, чтобы id не менялся.
+     * P.S. Просто присвоил номер id.
+     * P.P.S. Проверка параметров метода
+     * называется ВАЛИДАЦИЕЙ.
      *
-     * 3.Если Item не найден - возвращает null.
+     * @param id номер заявки.
+     * @param item заявка.
+     * @return true, если замена была произведена
+     * успешно. Иначе false.
+     */
+    @Override
+    public boolean replace(int id, Item item) {
+        int index = indexOf(id);
+        if (index != -1 && items.get(index) != null) {
+            items.set(index, item);
+            item.setId(id);
+            return true;
+        }
+        return false;
+
+    }
+
+    /**
+     * Данный метод удаляет заявку.
      *
-     * После того, как мы создали метод
-     * {@link Tracker#indexOf}, то методы
-     * {@link Tracker#findById} и
-     * {@link Tracker#indexOf} стали похожи.
-     * Это значит, что поиск по id можно
-     * упростить. Если индекс (с помощью
-     * метода) найден, то возвращаем
-     * {@link Item}, иначе null.
+     * 1.Кол-во заявок size будет уменьшаться.
+     * Если size не уменьшить, то тест не пройдет.
+     * 2.Чтобы убрать дыру в массиве в виде
+     * объекта null, мы использовали метод
+     * {@link System#arraycopy}.
      *
-     * UPDATE
-     * Теперь возвращаем объект так:
-     * items.get(index).
+     * Метод {@link System#arraycopy} может
+     * работать с одним массивом для
+     * source и dest.
+     *
+     * UPDATE COLLECTION
+     * Здесь я сначала проверил, что удаляемая
+     * запись существует. А потом, чтобы закрыть
+     * дыру в списке, я пересоздал список.
      *
      * @param id номер заявки
-     * @return заявку с найденным
-     * номером или null.
+     * @return true, если заявка удалилась,
+     * или false, если заявка не была найдена по id.
      */
-    public Item findById(int id) {
-        int index = indexOf(id);
-        return index != -1 ? items.get(index) : null;
+    @Override
+    public boolean delete(int id) {
+        int indexToDel = indexOf(id);
+        if (indexToDel != -1) {
+            items.remove(indexToDel);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -91,18 +126,22 @@ public class Tracker {
      * заявок из пула в 100 штук
      * (это сколько мы зарезервировали).
      *
-     * UPDATE
+     * UPDATE COLLECTION
      * Ранее мы возвращали массив.
      * Теперь возвращаем коллекцию.
      *
      * @return возвращает заявки
      * без нулевых значений.
      */
+    @Override
     public List<Item> findAll() {
         return new ArrayList<>(items);
     }
 
     /**
+     * Данный метод находит все заявки
+     * по указанному имени.
+     *
      * 1.Проверяем все элементы массива
      * items (все заявки).
      * 2.Сравниваем с нашим именем (которое
@@ -116,9 +155,9 @@ public class Tracker {
      * поэтому достаточно вместо items.length
      * использовать size.
      *
-     * UPDATE
+     * UPDATE COLLECTION
      * Проходимся по списку объектов {@link Item},
-     * сравниавем поле имени с ключом key.
+     * сравниваем поле имени с ключом key.
      * Если совпадает, то добавляем в
      * новый список объектов.
      *
@@ -126,6 +165,7 @@ public class Tracker {
      * @return список заявок/заявку
      * по найденному имени
      */
+    @Override
     public List<Item> findByName(String key) {
         List<Item> itemsList = new ArrayList<>();
         for (Item item : items) {
@@ -137,31 +177,39 @@ public class Tracker {
     }
 
     /**
-     * Данный метод позволяет заменить заявки.
+     * Метод находит заявку по id.
      *
-     * Но сначала нам нужно найти ячейку,
-     * поэтому ниже прописали метод
-     * для нахождения номера ячейки (индекса).
+     * 1.Проверяем все элементы массива
+     * items (все заявки).
      *
-     * Создается объект {@link Item} с id = 0.
-     * А нам нужно, чтобы id не менялся.
-     * P.S. Просто присвоил номер id.
-     * P.P.S. Проверка параметров метода
-     * называется ВАЛИДАЦИЕЙ.
+     * 2.Сравниваем их с номером id
+     * (используя метод {@link Item#getId()})
+     * и возвращаем найденный {@link Item}
+     * (у нас мы назвали rslItem).
+     *
+     * 3.Если Item не найден - возвращает null.
+     *
+     * После того, как мы создали метод
+     * {@link MemTracker#indexOf}, то методы
+     * {@link MemTracker#findById} и
+     * {@link MemTracker#indexOf} стали похожи.
+     * Это значит, что поиск по id можно
+     * упростить. Если индекс (с помощью
+     * метода) найден, то возвращаем
+     * {@link Item}, иначе null.
+     *
+     * UPDATE COLLECTION
+     * Теперь возвращаем объект так:
+     * items.get(index).
      *
      * @param id номер заявки
-     * @param item объект (заявка)
-     * @return новый объект на месте старой заявки
-
+     * @return заявку с найденным
+     * номером или null.
      */
-    public boolean replace(int id, Item item) {
+    @Override
+    public Item findById(int id) {
         int index = indexOf(id);
-        if (index != -1 && items.get(index) != null) {
-            items.set(index, item);
-            item.setId(id);
-            return true;
-        }
-        return false;
+        return index != -1 ? items.get(index) : null;
     }
 
     /**
@@ -171,7 +219,7 @@ public class Tracker {
      * Метод объявлен как private, потому что
      * он используется только внутри системы.
      *
-     * UPDATE
+     * UPDATE COLLECTION
      * Теперь главное правильно ходить
      * по коллекции. Здесь в качестве
      * переменной внутри цикла использовали
@@ -189,37 +237,5 @@ public class Tracker {
             }
         }
         return rsl;
-    }
-
-    /**
-     * Данный метод удаляет заявку
-     * из массива заявок.
-     *
-     * 1.Кол-во заявок size будет уменьшаться.
-     * Если size не уменьшить, то тест не пройдет.
-     * 2.Чтобы убрать дыру в массиве в виде
-     * объекта null, мы использовали метод
-     * {@link System#arraycopy}.
-     *
-     * Метод {@link System#arraycopy} может
-     * работать с одним массивом для
-     * source и dest.
-     *
-     * UPDATE
-     * Здесь я сначала проверил, что удаляемая
-     * запись существует. А потом, чтобы закрыть
-     * дыру в списке, я пересоздал список.
-     *
-     * @param id номер заявки
-     * @return true, если заявка удалилась,
-     * или false, если заявка не была найдена по id.
-     */
-    public boolean delete(int id) {
-        int indexToDel = indexOf(id);
-        if (indexToDel != -1) {
-            items.remove(indexToDel);
-            return true;
-        }
-        return false;
     }
 }

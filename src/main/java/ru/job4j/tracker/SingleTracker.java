@@ -28,7 +28,7 @@ public final class SingleTracker {
      * Создал объект класса Tracker
      * в качестве переменной поля.
      */
-    private static Tracker tracker;
+    private static MemTracker memTracker;
 
     /**
      * Создал объект внутри
@@ -60,15 +60,15 @@ public final class SingleTracker {
     /**
      * Используя композицию объектов,
      * добавим методы класса
-     * {@link Tracker} в данный класс.
-     * Добавив объект класса {@link Tracker},
+     * {@link MemTracker} в данный класс.
+     * Добавив объект класса {@link MemTracker},
      * мы получили доступ к методам класса.
      *
      * @param item объект класса {@link Item} (заявка).
      * @return заявка.
      */
     public Item add(Item item) {
-        return tracker.add(item);
+        return memTracker.add(item);
     }
 
     /**
@@ -76,7 +76,7 @@ public final class SingleTracker {
      * через полученный объект одиночки.
      */
     public Item findById(int id) {
-        return tracker.findById(id);
+        return memTracker.findById(id);
     }
 
     /**
@@ -84,7 +84,7 @@ public final class SingleTracker {
      * через полученный объект одиночки.
      */
     public List<Item> findAll() {
-        return tracker.findAll();
+        return memTracker.findAll();
     }
 
     /**
@@ -92,7 +92,7 @@ public final class SingleTracker {
      * через полученный объект одиночки.
      */
     public List<Item> findByName(String key) {
-        return tracker.findByName(key);
+        return memTracker.findByName(key);
     }
 
     /**
@@ -100,7 +100,7 @@ public final class SingleTracker {
      * через полученный объект одиночки.
      */
     public boolean replace(Item item, int id) {
-        return tracker.replace(id, item);
+        return memTracker.replace(id, item);
     }
 
     /**
@@ -108,6 +108,6 @@ public final class SingleTracker {
      * через полученный объект одиночки.
      */
     public boolean delete(int id) {
-        return tracker.delete(id);
+        return memTracker.delete(id);
     }
 }

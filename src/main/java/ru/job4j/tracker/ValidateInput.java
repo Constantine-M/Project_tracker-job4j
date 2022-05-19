@@ -19,6 +19,7 @@ package ru.job4j.tracker;
  * Привязываем класс к интерфейсу Input.
  */
 public class ValidateInput implements Input {
+
     private final Output out;
     private final Input in;
 

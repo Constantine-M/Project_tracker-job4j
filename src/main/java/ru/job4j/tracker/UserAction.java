@@ -14,9 +14,10 @@ public interface UserAction {
      * @param input переменная интерфейса Input (определяет
      *              работу класса по получению данных
      *              от пользователя в консоли.)
-     * @param tracker переменная класса Tracker
-     *                для манипуляций с заявками.
+     * @param tracker переменная класса {@link SqlTracker}
+     *                или {@link MemTracker}, которые
+     *                имплементируют {@link Store}.
      * @return true or false.
      */
-    boolean execute(Input input, Tracker tracker);
+    boolean execute(Input input, Store tracker);
 }

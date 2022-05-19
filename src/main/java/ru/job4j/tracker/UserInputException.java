@@ -12,6 +12,7 @@ package ru.job4j.tracker;
  * а не просто получить пустой вывод.
  */
 public class UserInputException extends Exception {
+
     public UserInputException(String message) {
         super(message);
     }

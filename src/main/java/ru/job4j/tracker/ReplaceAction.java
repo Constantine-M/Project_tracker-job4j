@@ -40,7 +40,7 @@ public class ReplaceAction implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean execute(Input input, Store tracker) {
         output.println("==== Update item ====");
         int id = input.askInt("Enter record ID: ");
         String recName = input.askStr("New record name: ");

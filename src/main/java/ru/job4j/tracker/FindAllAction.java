@@ -48,16 +48,17 @@ public class FindAllAction implements UserAction {
      * создавали МАССИВ заявок.
      * А теперь используем {@link List}.
      *
-     * @param input переменная интерфейса Input
+     * @param input переменная интерфейса {@link Input}
      *              (определяет работу класса по
      *              получению данных от пользователя
      *              в консоли).
-     * @param tracker переменная класса Tracker
-     *                для манипуляций с заявками.
+     * @param tracker переменная класса {@link SqlTracker}
+     *                или {@link MemTracker}, которые
+     *                имплементируют {@link Store}.
      * @return true, если действие выполнилось.
      */
     @Override
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean execute(Input input, Store tracker) {
         output.println("==== Create complete list ====");
         List<Item> list = tracker.findAll();
         for (Item records : list) {

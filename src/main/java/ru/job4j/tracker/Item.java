@@ -1,6 +1,7 @@
 package ru.job4j.tracker;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /**
@@ -8,6 +9,13 @@ import java.util.Objects;
  * id - это уникальный номер.
  */
 public class Item {
+
+    private static final DateTimeFormatter FORMATTER =
+            DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+    private int id;
+
+    private String name;
 
     /**
      * Добавил поле типа {@link LocalDateTime}
@@ -17,10 +25,6 @@ public class Item {
      * {@link LocalDateTime#now()}.
      */
     private LocalDateTime created = LocalDateTime.now();
-
-    private int id;
-
-    private String name;
 
     /**
      * Создали конструктор без
@@ -63,6 +67,12 @@ public class Item {
         this.name = name;
     }
 
+    public Item(int id, String name, LocalDateTime created) {
+        this.id = id;
+        this.name = name;
+        this.created = created;
+    }
+
     /**
      * Добавили геттер, чтобы получить
      * доступ к полю {@link Item#created}.
@@ -87,13 +97,17 @@ public class Item {
         this.name = name;
     }
 
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
     @Override
     public String toString() {
-        return "Item{"
-                + "created=" + created
-                + ", id=" + id
-                + ", name='" + name + '\''
-                + '}';
+        return String.format("id: %s, name: %s, created: %s", id, name, FORMATTER.format(created));
     }
 
     @Override
