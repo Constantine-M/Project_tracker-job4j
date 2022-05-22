@@ -140,8 +140,6 @@ public class SqlTracker  implements Store, AutoCloseable {
         String ls = System.lineSeparator();
         boolean result = false;
         String sqlV1 = "UPDATE items SET name = ?, created = ? WHERE id = ?";
-        String sqlV2 = "REPLACE INTO items (name, created) VALUES (?, ?) WHERE EXISTS (" + ls
-                + "SELECT * FROM items WHERE id = ?)";
         try (PreparedStatement ps = cn.prepareStatement(sqlV1)) {
             ps.setString(1, item.getName());
             ps.setTimestamp(2, Timestamp.valueOf(item.getLocalDateTime()));
@@ -192,11 +190,7 @@ public class SqlTracker  implements Store, AutoCloseable {
         try (PreparedStatement ps = cn.prepareStatement(sql)) {
             try (ResultSet resultSet = ps.executeQuery()) {
                 while (resultSet.next()) {
-                    items.add(new Item(
-                            resultSet.getInt(1),
-                            resultSet.getString(2),
-                            resultSet.getTimestamp(3).toLocalDateTime()
-                    ));
+                    items.add(setItemParameter(resultSet));
                 }
             }
         } catch (SQLException e) {
@@ -220,11 +214,7 @@ public class SqlTracker  implements Store, AutoCloseable {
             ps.setString(1, key);
             try (ResultSet resultSet = ps.executeQuery()) {
                 while (resultSet.next()) {
-                    items.add(new Item(
-                            resultSet.getInt(1),
-                            resultSet.getString(2),
-                            resultSet.getTimestamp(3).toLocalDateTime()
-                    ));
+                    items.add(setItemParameter(resultSet));
                 }
             }
         } catch (SQLException e) {
@@ -236,25 +226,45 @@ public class SqlTracker  implements Store, AutoCloseable {
     /**
      * Данный метод находит заявку по id.
      *
+     * Замечание: т.к. заявка должна
+     * возвращаться только одна, то цикл
+     * в этом методе НЕ НУЖЕН.
+     *
      * @param id номер заявки.
      * @return найденная заявка {@link Item}.
      */
     @Override
     public Item findById(int id) {
-        Item item = new Item();
         String sql = "SELECT * FROM items WHERE id = ?";
         try (PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet resultSet = ps.executeQuery()) {
-                while (resultSet.next()) {
-                    item.setId(resultSet.getInt(1));
-                    item.setName(resultSet.getString(2));
-                    item.setCreated(resultSet.getTimestamp(3).toLocalDateTime());
+                if (resultSet.next()) {
+                    return setItemParameter(resultSet);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return item;
+        return null;
+    }
+
+    /**
+     * Данный метод задает параметры
+     * для {@link Item}.
+     *
+     * Он необходим, чтобы исключить
+     * дублирвоание кода в методах.
+     *
+     * @param resultSet набор результатов БД.
+     * @return заявка с заданными параметрами.
+     * @throws SQLException
+     */
+    private Item setItemParameter(ResultSet resultSet) throws SQLException {
+        return new Item(
+                resultSet.getInt(1),
+                resultSet.getString(2),
+                resultSet.getTimestamp(3).toLocalDateTime()
+        );
     }
 }
