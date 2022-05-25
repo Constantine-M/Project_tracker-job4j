@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import static org.hamcrest.Matchers.*;
@@ -61,12 +63,70 @@ public class SqlTrackerTest {
         }
     }
 
-    @Ignore
     @Test
     public void whenSaveItemAndFindByGeneratedIdThenMustBeTheSame() {
-        SqlTracker tracker = new SqlTracker();
+        SqlTracker tracker = new SqlTracker(connection);
         Item item = new Item("item");
         tracker.add(item);
         assertThat(tracker.findById(item.getId()), is(item));
+    }
+
+    @Test
+    public void whenReplace() {
+        SqlTracker tracker = new SqlTracker(connection);
+        Item american = new Item("dollar");
+        tracker.add(american);
+        Item chinese = new Item("yuan");
+        tracker.replace(american.getId(), chinese);
+        assertThat(tracker.findById(american.getId()).getName(), is("yuan"));
+    }
+
+    @Test
+    public void whenDelete() {
+        SqlTracker tracker = new SqlTracker(connection);
+        Item american = new Item("dollar");
+        tracker.delete(american.getId());
+        assertThat(tracker.findById(american.getId()), is(nullValue()));
+    }
+
+    @Test
+    public void whenAdd() {
+        SqlTracker tracker = new SqlTracker(connection);
+        Item american = new Item("dollar");
+        assertThat(tracker.add(american), is(american));
+    }
+
+    @Test
+    public void whenFindAll() {
+        SqlTracker tracker = new SqlTracker(connection);
+        Item bonnie = new Item("Bonnie");
+        Item clyde = new Item("Clyde");
+        tracker.add(bonnie);
+        tracker.add(clyde);
+        List<Item> expected = new ArrayList<>();
+        expected.add(bonnie);
+        expected.add(clyde);
+        assertThat(tracker.findAll(), is(expected));
+    }
+
+    @Test
+    public void whenFindByName() {
+        SqlTracker tracker = new SqlTracker(connection);
+        Item bonnie = new Item("Bonnie");
+        Item clyde = new Item("Bonnie");
+        tracker.add(bonnie);
+        tracker.add(clyde);
+        List<Item> expected = new ArrayList<>();
+        expected.add(bonnie);
+        expected.add(clyde);
+        assertThat(tracker.findByName("Bonnie"), is(expected));
+    }
+
+    @Test
+    public void whenFindById() {
+        SqlTracker tracker = new SqlTracker(connection);
+        Item bonnie = new Item("Bonnie");
+        tracker.add(bonnie);
+        assertThat(tracker.findById(bonnie.getId()), is(bonnie));
     }
 }

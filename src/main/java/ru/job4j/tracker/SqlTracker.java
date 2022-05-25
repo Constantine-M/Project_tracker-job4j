@@ -19,6 +19,13 @@ public class SqlTracker  implements Store, AutoCloseable {
 
     private Connection cn;
 
+    public SqlTracker() {
+    }
+
+    public SqlTracker(Connection cn) {
+        this.cn = cn;
+    }
+
     /**
      * Данный метод инициализирует
      * подключение к БД.
