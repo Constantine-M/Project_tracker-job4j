@@ -126,5 +126,12 @@ public class StartUI {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        /*MemTracker tracker = new MemTracker();
+        List<UserAction> actions = List.of(
+                new CreateActionGCTest(),
+                new DeleteActionGCTest(),
+                new ExitAction(output)
+        );
+        new StartUI(output).init(input, tracker, actions);*/
     }
 }
