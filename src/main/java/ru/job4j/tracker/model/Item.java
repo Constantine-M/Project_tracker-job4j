@@ -1,6 +1,8 @@
 package ru.job4j.tracker.model;
 
 import lombok.Data;
+import ru.job4j.tracker.action.CreateActionGCTest;
+import ru.job4j.tracker.store.SqlTracker;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -47,7 +49,7 @@ public class Item {
      *
      * Данный конструктор требуется для
      * функционирования класса
-     * {@link ru.job4j.tracker.action.CreateActionGCTest}.
+     * {@link CreateActionGCTest}.
      *
      * @param name имя заявки
      */
@@ -58,7 +60,7 @@ public class Item {
     /**
      * Данный конструктор необходим для
      * функционирования класса
-     * {@link ru.job4j.tracker.store.SqlTracker}.
+     * {@link SqlTracker}.
      */
     public Item(int id, String name, LocalDateTime created) {
         this.id = id;

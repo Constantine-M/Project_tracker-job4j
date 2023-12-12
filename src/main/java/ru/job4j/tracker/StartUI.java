@@ -1,5 +1,11 @@
 package ru.job4j.tracker;
 
+import ru.job4j.tracker.action.*;
+import ru.job4j.tracker.io.*;
+import ru.job4j.tracker.store.MemTracker;
+import ru.job4j.tracker.store.SqlTracker;
+import ru.job4j.tracker.store.Store;
+
 import java.util.List;
 
 /**
@@ -12,6 +18,10 @@ import java.util.List;
  * {@link System#out}, вносим
  * изменения с помощью конструктора
  * (интерфейс {@link Output}).
+ *
+ * Чтобы запустить программу, убедитесь,
+ * что у вас создана БД. Я создал
+ * БД с именем "tracker".
  */
 public class StartUI {
 
@@ -126,12 +136,5 @@ public class StartUI {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        /*MemTracker tracker = new MemTracker();
-        List<UserAction> actions = List.of(
-                new CreateActionGCTest(),
-                new DeleteActionGCTest(),
-                new ExitAction(output)
-        );
-        new StartUI(output).init(input, tracker, actions);*/
     }
 }
