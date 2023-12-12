@@ -1,6 +1,11 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.action;
 
-public class DeleteAction implements UserAction {
+import ru.job4j.tracker.io.Input;
+import ru.job4j.tracker.io.Output;
+import ru.job4j.tracker.store.Store;
+import ru.job4j.tracker.model.Item;
+
+public class ReplaceAction implements UserAction {
 
     /**
      * Создали переменную поля  в
@@ -28,25 +33,27 @@ public class DeleteAction implements UserAction {
      * все попавшиеся объекты и старается
      * их вывести на консоль (да, все верно).
      */
-    private final Output out;
+    private final Output output;
 
-    public DeleteAction(Output out) {
-        this.out = out;
+    public ReplaceAction(Output output) {
+        this.output = output;
     }
 
     @Override
     public String name() {
-        return "Delete Item";
+        return "Replace Item";
     }
 
     @Override
     public boolean execute(Input input, Store tracker) {
-        out.println("==== Removal process ====");
-        int idToDel = input.askInt("Enter record ID: ");
-        if (tracker.delete(idToDel)) {
-            out.println("==== Record removed successfully ====");
+        output.println("==== Update item ====");
+        int id = input.askInt("Enter record ID: ");
+        String recName = input.askStr("New record name: ");
+        Item newRec = new Item(recName);
+        if (tracker.replace(id, newRec)) {
+            output.println("==== Replacement successful ====");
         } else {
-            out.println("==== Record ID not found ====");
+            output.println("==== Record ID not found ====");
         }
         return true;
     }

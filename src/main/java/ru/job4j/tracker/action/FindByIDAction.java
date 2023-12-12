@@ -1,8 +1,11 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.action;
 
-import java.util.List;
+import ru.job4j.tracker.io.Input;
+import ru.job4j.tracker.io.Output;
+import ru.job4j.tracker.store.Store;
+import ru.job4j.tracker.model.Item;
 
-public class FindByNameAction implements UserAction {
+public class FindByIDAction implements UserAction {
 
     /**
      * Создали переменную поля  в
@@ -32,41 +35,23 @@ public class FindByNameAction implements UserAction {
      */
     private final Output output;
 
-    public FindByNameAction(Output output) {
+    public FindByIDAction(Output output) {
         this.output = output;
     }
 
     @Override
     public String name() {
-        return "Find Item by name";
+        return "Find Item by ID";
     }
 
-    /**
-     * Данный метод находит заявку по имени.
-     *
-     * В данном методе ранее мы
-     * создавали МАССИВ заявок.
-     * А теперь используем {@link List}.
-     *
-     * @param input переменная интерфейса Input
-     *              (определяет работу класса по
-     *              получению данных от пользователя
-     *              в консоли).
-     * @param tracker переменная класса Tracker
-     *                для манипуляций с заявками.
-     * @return true, если нашли заявку по имени,
-     * иначе сообщение о том, что ничего не найдено.
-     */
     @Override
     public boolean execute(Input input, Store tracker) {
-        String nameRec = input.askStr("Enter record name: ");
-        List<Item> records = tracker.findByName(nameRec);
-        if (records.size() > 0) {
-            for (Item recs : records) {
-                output.println(recs);
-            }
+        int idToFind = input.askInt("Enter record ID: ");
+        Item findRec = tracker.findById(idToFind);
+        if (findRec != null) {
+            output.println(findRec);
         } else {
-                output.println("==== Records with such name not found ====");
+            output.println("==== Record with such id not found ====");
         }
         return true;
     }

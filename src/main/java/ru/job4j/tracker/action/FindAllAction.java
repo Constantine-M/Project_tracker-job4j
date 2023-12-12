@@ -1,6 +1,15 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.action;
 
-public class ExitAction implements UserAction {
+import ru.job4j.tracker.io.Input;
+import ru.job4j.tracker.io.Output;
+import ru.job4j.tracker.model.Item;
+import ru.job4j.tracker.store.MemTracker;
+import ru.job4j.tracker.store.SqlTracker;
+import ru.job4j.tracker.store.Store;
+
+import java.util.List;
+
+public class FindAllAction implements UserAction {
 
     /**
      * Создали переменную поля  в
@@ -30,17 +39,38 @@ public class ExitAction implements UserAction {
      */
     private final Output output;
 
-    public ExitAction(Output output) {
+    public FindAllAction(Output output) {
         this.output = output;
     }
 
     @Override
     public String name() {
-        return "Exit program";
+        return "Find all Items";
     }
 
+    /**
+     * Данный метод находит все заявки.
+     *
+     * В данном методе ранее мы
+     * создавали МАССИВ заявок.
+     * А теперь используем {@link List}.
+     *
+     * @param input переменная интерфейса {@link Input}
+     *              (определяет работу класса по
+     *              получению данных от пользователя
+     *              в консоли).
+     * @param tracker переменная класса {@link SqlTracker}
+     *                или {@link MemTracker}, которые
+     *                имплементируют {@link Store}.
+     * @return true, если действие выполнилось.
+     */
     @Override
     public boolean execute(Input input, Store tracker) {
-        return false;
+        output.println("==== Create complete list ====");
+        List<Item> list = tracker.findAll();
+        for (Item records : list) {
+            output.println(records);
+        }
+        return true;
     }
 }

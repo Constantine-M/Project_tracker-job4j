@@ -1,8 +1,10 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.action;
 
-import java.util.List;
+import ru.job4j.tracker.io.Input;
+import ru.job4j.tracker.io.Output;
+import ru.job4j.tracker.store.Store;
 
-public class FindAllAction implements UserAction {
+public class DeleteAction implements UserAction {
 
     /**
      * Создали переменную поля  в
@@ -30,39 +32,25 @@ public class FindAllAction implements UserAction {
      * все попавшиеся объекты и старается
      * их вывести на консоль (да, все верно).
      */
-    private final Output output;
+    private final Output out;
 
-    public FindAllAction(Output output) {
-        this.output = output;
+    public DeleteAction(Output out) {
+        this.out = out;
     }
 
     @Override
     public String name() {
-        return "Find all Items";
+        return "Delete Item";
     }
 
-    /**
-     * Данный метод находит все заявки.
-     *
-     * В данном методе ранее мы
-     * создавали МАССИВ заявок.
-     * А теперь используем {@link List}.
-     *
-     * @param input переменная интерфейса {@link Input}
-     *              (определяет работу класса по
-     *              получению данных от пользователя
-     *              в консоли).
-     * @param tracker переменная класса {@link SqlTracker}
-     *                или {@link MemTracker}, которые
-     *                имплементируют {@link Store}.
-     * @return true, если действие выполнилось.
-     */
     @Override
     public boolean execute(Input input, Store tracker) {
-        output.println("==== Create complete list ====");
-        List<Item> list = tracker.findAll();
-        for (Item records : list) {
-            output.println(records);
+        out.println("==== Removal process ====");
+        int idToDel = input.askInt("Enter record ID: ");
+        if (tracker.delete(idToDel)) {
+            out.println("==== Record removed successfully ====");
+        } else {
+            out.println("==== Record ID not found ====");
         }
         return true;
     }

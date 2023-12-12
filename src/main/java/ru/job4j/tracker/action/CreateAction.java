@@ -1,4 +1,9 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.action;
+
+import ru.job4j.tracker.io.Input;
+import ru.job4j.tracker.io.Output;
+import ru.job4j.tracker.store.Store;
+import ru.job4j.tracker.model.Item;
 
 public class CreateAction implements UserAction {
 

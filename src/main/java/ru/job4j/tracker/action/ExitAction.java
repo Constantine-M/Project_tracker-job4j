@@ -1,6 +1,10 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.action;
 
-public class ReplaceAction implements UserAction {
+import ru.job4j.tracker.io.Input;
+import ru.job4j.tracker.io.Output;
+import ru.job4j.tracker.store.Store;
+
+public class ExitAction implements UserAction {
 
     /**
      * Создали переменную поля  в
@@ -30,26 +34,17 @@ public class ReplaceAction implements UserAction {
      */
     private final Output output;
 
-    public ReplaceAction(Output output) {
+    public ExitAction(Output output) {
         this.output = output;
     }
 
     @Override
     public String name() {
-        return "Replace Item";
+        return "Exit program";
     }
 
     @Override
     public boolean execute(Input input, Store tracker) {
-        output.println("==== Update item ====");
-        int id = input.askInt("Enter record ID: ");
-        String recName = input.askStr("New record name: ");
-        Item newRec = new Item(recName);
-        if (tracker.replace(id, newRec)) {
-            output.println("==== Replacement successful ====");
-        } else {
-            output.println("==== Record ID not found ====");
-        }
-        return true;
+        return false;
     }
 }

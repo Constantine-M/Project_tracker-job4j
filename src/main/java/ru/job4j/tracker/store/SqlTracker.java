@@ -1,4 +1,6 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.store;
+
+import ru.job4j.tracker.model.Item;
 
 import java.io.InputStream;
 import java.sql.*;
@@ -110,7 +112,7 @@ public class SqlTracker  implements Store, AutoCloseable {
         try (PreparedStatement ps = cn.prepareStatement(sql,
                 Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, item.getName());
-            ps.setTimestamp(2, Timestamp.valueOf(item.getLocalDateTime()));
+            ps.setTimestamp(2, Timestamp.valueOf(item.getCreated()));
             ps.execute();
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -149,7 +151,7 @@ public class SqlTracker  implements Store, AutoCloseable {
         String sqlV1 = "UPDATE items SET name = ?, created = ? WHERE id = ?";
         try (PreparedStatement ps = cn.prepareStatement(sqlV1)) {
             ps.setString(1, item.getName());
-            ps.setTimestamp(2, Timestamp.valueOf(item.getLocalDateTime()));
+            ps.setTimestamp(2, Timestamp.valueOf(item.getCreated()));
             ps.setInt(3, id);
             result = ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -261,7 +263,7 @@ public class SqlTracker  implements Store, AutoCloseable {
      * для {@link Item}.
      *
      * Он необходим, чтобы исключить
-     * дублирвоание кода в методах.
+     * дублирование кода в методах.
      *
      * @param resultSet набор результатов БД.
      * @return заявка с заданными параметрами.
