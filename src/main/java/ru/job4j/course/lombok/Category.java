@@ -28,7 +28,6 @@ import lombok.*;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Category {
 
-    @NonNull
     @EqualsAndHashCode.Include
     @Getter
     private int id;
