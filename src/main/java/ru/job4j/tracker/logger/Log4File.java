@@ -1,4 +1,4 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.logger;
 
 /**
  * На примере данного класса опишем
