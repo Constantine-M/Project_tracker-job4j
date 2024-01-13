@@ -100,12 +100,9 @@ public class SqlTrackerTest {
     @Test
     public void whenFindAll() {
         SqlTracker tracker = new SqlTracker(connection);
-        Item item1 = tracker.add(new Item("Item 1"));
-        Item item2 = tracker.add(new Item("Item 2"));
-        Item item3 = tracker.add(new Item("Item 3"));
         Item bonnie = tracker.add(new Item("Bonnie"));
         Item clyde = tracker.add(new Item("Clyde"));
-        assertThat(tracker.findAll(), is(List.of(item1, item2, item3, bonnie, clyde)));
+        assertThat(tracker.findAll(), is(List.of(bonnie, clyde)));
     }
 
     @Test

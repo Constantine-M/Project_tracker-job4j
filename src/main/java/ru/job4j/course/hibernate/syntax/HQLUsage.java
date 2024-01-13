@@ -21,7 +21,9 @@ import java.time.LocalDateTime;
 public class HQLUsage {
 
     public static void main(String[] args) {
-        Item itemB = new Item(3, "ItemB", LocalDateTime.now());
+        Item item1 = new Item(1, "Item 1", LocalDateTime.now());
+        Item item2 = new Item(1, "Item 2", LocalDateTime.now());
+        Item item3 = new Item(1, "Item 3", LocalDateTime.now());
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure()
                 .build();
@@ -29,17 +31,21 @@ public class HQLUsage {
                                                 .buildMetadata()
                                                 .buildSessionFactory()) {
             Session session = sessionFactory.openSession();
+            insert(session, item1);
+            insert(session, item2);
             findAll(session);
             unique(session);
-            findById(session, 3);
-            update(session, 3);
-            System.out.println("AFTER UPDATE Item 3");
+            findById(session, 2);
+            System.out.println("UPDATE Item 2");
+            update(session, 2);
+            System.out.println("AFTER UPDATE Item 2");
             findAll(session);
-            delete(session, 3);
-            System.out.println("AFTER DELETE new name");
+            System.out.println("DELETE Item 2");
+            delete(session, 2);
+            System.out.println("AFTER DELETE bebebe");
             findAll(session);
-            insert(session, itemB);
-            System.out.println("AFTER INSERT ItemB");
+            insert(session, item3);
+            System.out.println("AFTER INSERT Item");
             findAll(session);
         } finally {
             StandardServiceRegistryBuilder.destroy(registry);
@@ -55,7 +61,9 @@ public class HQLUsage {
      * имя таблицы откуда мы делаем выборку.
      */
     public static void findAll(Session session) {
+        System.out.println("---------------------------------------------------");
         System.out.println("HQL FIND ALL");
+        System.out.println("---------------------------------------------------");
         Query query = session.createQuery("from Item");
         for (Object st : query.list()) {
             System.out.println(st);
@@ -73,9 +81,11 @@ public class HQLUsage {
      * (не список короче).
      */
     public static void unique(Session session) {
+        System.out.println("---------------------------------------------------");
         System.out.println("HQL FIND UNIQUE ITEM");
+        System.out.println("---------------------------------------------------");
         Query<Item> query = session.createQuery(
-                "FROM Item as item where item.id = 3", Item.class);
+                "FROM Item as item where item.id = 1", Item.class);
         System.out.println(query.uniqueResult());
     }
 
@@ -98,7 +108,9 @@ public class HQLUsage {
      * установлении параметра - совпадали.
      */
     public static void findById(Session session, int id) {
+        System.out.println("---------------------------------------------------");
         System.out.println("HQL FIND ITEM BY ID");
+        System.out.println("---------------------------------------------------");
         Query<Item> query = session.createQuery(
                 "from Item as item where item.id = :fId", Item.class
         );
@@ -122,14 +134,17 @@ public class HQLUsage {
      * откатываются.
      */
     public static void update(Session session, int id) {
+        System.out.println("---------------------------------------------------");
         System.out.println("HQL UPDATE");
+        System.out.println("---------------------------------------------------");
         try {
             session.beginTransaction();
-            session.createQuery(
+            Query query = session.createQuery(
                     "UPDATE Item SET name = :fName WHERE id = :fId")
-                    .setParameter("fName", "new name")
-                    .setParameter("fId", id)
-                    .executeUpdate();
+                        .setParameter("fName", "be-be-be")
+                        .setParameter("fId", id);
+            int result = query.executeUpdate();
+            System.out.println("Rows Affected: " + result);
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
@@ -144,7 +159,9 @@ public class HQLUsage {
      * update.
      */
     public static void delete(Session session, int id) {
+        System.out.println("---------------------------------------------------");
         System.out.println("HQL DELETE");
+        System.out.println("---------------------------------------------------");
         try {
             session.beginTransaction();
             session.createQuery(
@@ -157,8 +174,21 @@ public class HQLUsage {
         }
     }
 
+    /**
+     * HQL поддерживает вставку только из
+     * другой таблицы.
+     *
+     * То есть команда вроде:
+     * "INSERT ... VALUES ..." в HQL не
+     * поддерживается! Для простой вставки,
+     * какой мы ее знаем, используется
+     * {@link Session#save(Object)} как
+     * в методе {@link HQLUsage#insert(Session, Item)}.
+     */
     public static void insertFromOther(Session session, Item item) {
+        System.out.println("---------------------------------------------------");
         System.out.println("HQL INSERT");
+        System.out.println("---------------------------------------------------");
         try {
             session.beginTransaction();
             Query query = session.createQuery(
@@ -178,6 +208,9 @@ public class HQLUsage {
      * метод {@link Session#save(Object)}.
      */
     public static void insert(Session session, Item item) {
+        System.out.println("---------------------------------------------------");
+        System.out.println("HQL INSERT (CLASSIC INSERT)");
+        System.out.println("---------------------------------------------------");
         try {
             session.beginTransaction();
             session.save(item);
