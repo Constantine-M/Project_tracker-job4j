@@ -19,11 +19,10 @@
         <profile>
             <id>test</id>
             <properties>
-                <db.url>jdbc:h2:./testdb;MODE=PostgreSQL;CASE_INSENSITIVE_IDENTIFIERS=TRUE;</db.url>
-                <db.username></db.username>
-                <db.password></db.password>
-                <db.driver>org.h2.Driver</db.driver>
+                <liquibase.config>db/liquibase_test.properties</liquibase.config>
             </properties>
+            <!--    профиль test мы делаем профилем по умолчанию, потому что сборка проекта
+                    по умолчанию должна собираться без настроек окружения-->
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -31,10 +30,7 @@
         <profile>
             <id>production</id>
             <properties>
-                <db.url>jdbc:postgresql://localhost:5432/tracker</db.url>
-                <db.username>postgres</db.username>
-                <db.password>Okhorzina2912</db.password>
-                <db.driver>org.postgresql.Driver</db.driver>
+                <liquibase.config>db/liquibase.properties</liquibase.config>
             </properties>
         </profile>
     </profiles>
@@ -185,20 +181,17 @@
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
-                <version>3.10.3</version>
+                <version>4.23.0</version>
                 <configuration>
-                    <changeLogFile>${basedir}/db/master.xml</changeLogFile>
-                    <url>${db.url}</url>
-                    <driver>${db.driver}</driver>
-                    <username>${db.username}</username>
-                    <password>${db.password}</password>
-                    <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+                    <propertyFile>${liquibase.config}</propertyFile>
                 </configuration>
                 <executions>
                     <execution>
                         <phase>process-resources</phase>
                         <goals>
                             <goal>clearCheckSums</goal>
+                            <!-- Находит SQL запросы, но пока не применяет их к БД-->
+                            <goal>updateSQL</goal>
                             <goal>update</goal>
                         </goals>
                     </execution>

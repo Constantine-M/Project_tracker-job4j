@@ -43,7 +43,7 @@ public class Item {
 
     private String name;
 
-    private LocalDateTime created = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+    private LocalDateTime created = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
 
     /**
      * Данный конструктор требуется для

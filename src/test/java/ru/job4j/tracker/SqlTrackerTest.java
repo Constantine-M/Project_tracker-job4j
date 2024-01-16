@@ -26,7 +26,7 @@ public class SqlTrackerTest {
     @BeforeClass
     public static void initConnection() {
         try (InputStream in = SqlTrackerTest.class.getClassLoader()
-                .getResourceAsStream("test.properties")) {
+                .getResourceAsStream("db/liquibase_test.properties")) {
             Properties config = new Properties();
             config.load(in);
             Class.forName(config.getProperty("h2driver-sql-tracker"));
@@ -59,6 +59,9 @@ public class SqlTrackerTest {
      */
     @After
     public void wipeTable() throws SQLException {
+        try (PreparedStatement ps = connection.prepareStatement("TRUNCATE TABLE items  RESTART IDENTITY")) {
+            ps.execute();
+        }
         try (PreparedStatement statement = connection.prepareStatement("delete from items")) {
             statement.execute();
         }
