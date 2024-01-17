@@ -48,17 +48,28 @@ public class HbmTracker implements Store, AutoCloseable {
     private final SessionFactory sessionFactory = new MetadataSources(registry)
             .buildMetadata().buildSessionFactory();
 
+    /**
+     * Добавляет Item.
+     *
+     * Здесь мы используем try-with-resources,
+     * поэтому сессия закроется автоматически.
+     */
     @Override
     public Item add(Item item) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(item);
-        session.getTransaction().commit();
-        return item;
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.save(item);
+            session.getTransaction().commit();
+            return item;
+        }
     }
 
     /**
      * Обновляет Item по ID.
+     *
+     * Если количество обновленных
+     * строк > 0, то обновление Item
+     * прошло успешно.
      *
      * @param id идентификатор Item
      * @param item item
@@ -66,47 +77,51 @@ public class HbmTracker implements Store, AutoCloseable {
      */
     @Override
     public boolean replace(int id, Item item) {
-        boolean result = true;
+        int affectedRows = 0;
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
-            session.createQuery(
-                    "UPDATE Item as item SET name = :fName, created = :fCreated WHERE item.id = :fId")
+            Query<Item> query = session.createQuery(
+                    "UPDATE Item as item SET name = :fName WHERE item.id = :fId", Item.class)
                     .setParameter("fName", item.getName())
-                    .setParameter("fCreated", item.getCreated())
-                    .setParameter("fId", item.getId())
-                    .executeUpdate();
+                    .setParameter("fId", item.getId());
+            affectedRows = query.executeUpdate();
             session.getTransaction().commit();
         } catch (Exception e) {
-            result = false;
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
-        return result;
+        return affectedRows > 0;
     }
 
     @Override
     public boolean delete(int id) {
-        boolean result = true;
+        int affectedRows = 0;
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
-            session.createQuery(
-                    "DELETE Item as item WHERE item.id = :fId")
-                    .setParameter("fId", id)
-                    .executeUpdate();
+            Query<Item> query = session.createQuery(
+                    "DELETE Item as item WHERE item.id = :fId", Item.class)
+                    .setParameter("fId", id);
+            affectedRows = query.executeUpdate();
             session.getTransaction().commit();
         } catch (Exception e) {
-            result = false;
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
-        return result;
+        return affectedRows > 0;
     }
 
     @Override
     public List<Item> findAll() {
-        Session session = sessionFactory.openSession();
-        Query<Item> query = session.createQuery("FROM Item", Item.class);
-        return new ArrayList<>(query.list());
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Query<Item> query = session.createQuery("FROM Item", Item.class);
+            session.getTransaction().commit();
+            return new ArrayList<>(query.list());
+        }
     }
 
     /**
@@ -119,18 +134,24 @@ public class HbmTracker implements Store, AutoCloseable {
      */
     @Override
     public List<Item> findByName(String key) {
-        Session session = sessionFactory.openSession();
-        Query<Item> query = session.createQuery("FROM Item item WHERE item.name = :fName", Item.class);
-        query.setParameter("fName", key);
-        return new ArrayList<>(query.list());
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Query<Item> query = session.createQuery("FROM Item item WHERE item.name = :fName", Item.class);
+            query.setParameter("fName", key);
+            session.getTransaction().commit();
+            return new ArrayList<>(query.list());
+        }
     }
 
     @Override
     public Item findById(int id) {
-        Session session = sessionFactory.openSession();
-        Query<Item> query = session.createQuery("FROM Item item WHERE item.id = :fId", Item.class)
-                .setParameter("fId", id);
-        return query.uniqueResult();
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Query<Item> query = session.createQuery("FROM Item item WHERE item.id = :fId", Item.class)
+                    .setParameter("fId", id);
+            session.getTransaction().commit();
+            return query.uniqueResult();
+        }
     }
 
     /**
