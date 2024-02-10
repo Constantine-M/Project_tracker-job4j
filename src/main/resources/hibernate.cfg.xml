@@ -8,12 +8,14 @@
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/tracker</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">Okhorzina2912</property>
-        <property name="hibernate.connection.pool_size">1</property>
+        <property name="hibernate.connection.pool_size">10</property>
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
 
         <mapping class="ru.job4j.tracker.model.Item" />
+        <mapping class="ru.job4j.course.hibernate.toone.Role" />
+        <mapping class="ru.job4j.course.hibernate.toone.User" />
     </session-factory>
 </hibernate-configuration>
