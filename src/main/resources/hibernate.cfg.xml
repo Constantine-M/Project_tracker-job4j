@@ -17,5 +17,7 @@
         <mapping class="ru.job4j.tracker.model.Item" />
         <mapping class="ru.job4j.course.hibernate.toone.Role" />
         <mapping class="ru.job4j.course.hibernate.toone.User" />
+        <mapping class="ru.job4j.course.hibernate.toone.UserMessenger" />
+
     </session-factory>
 </hibernate-configuration>

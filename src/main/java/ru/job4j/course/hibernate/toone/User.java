@@ -1,11 +1,11 @@
 package ru.job4j.course.hibernate.toone;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static lombok.EqualsAndHashCode.*;
 
@@ -25,6 +25,7 @@ import static lombok.EqualsAndHashCode.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "j_user")
 @Entity
 public class User {
@@ -50,6 +51,22 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    /**
+     * Параметр cascade определяет стратегию
+     * поведения каскадных операций. В нашем
+     * случае, при удалении user удаляются все
+     * закрепленные за ним мессенджеры.
+     *
+     * Для связи one-to-many обязательно нужно
+     * указывать колонку для вторичного ключа.
+     * Если это не сделать, то hibernate будет
+     * создавать отдельную таблицу, а не
+     * использовать нашу схему.
+     */
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "j_user_id")
+    private List<UserMessenger> messengers = new ArrayList<>();
 
     @Override
     public String toString() {
