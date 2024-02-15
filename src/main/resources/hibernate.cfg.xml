@@ -18,6 +18,7 @@
         <mapping class="ru.job4j.course.hibernate.toone.Role" />
         <mapping class="ru.job4j.course.hibernate.toone.User" />
         <mapping class="ru.job4j.course.hibernate.toone.UserMessenger" />
+        <mapping class="ru.job4j.course.hibernate.toone.Thing" />
 
     </session-factory>
 </hibernate-configuration>
