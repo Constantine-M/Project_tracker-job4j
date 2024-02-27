@@ -1,4 +1,4 @@
-package ru.job4j.course.hibernate.toone;
+package ru.job4j.course.hibernate.mapping;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

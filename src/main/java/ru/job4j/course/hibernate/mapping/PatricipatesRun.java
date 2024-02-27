@@ -1,4 +1,4 @@
-package ru.job4j.course.hibernate.toone;
+package ru.job4j.course.hibernate.mapping;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -81,7 +81,7 @@ public class PatricipatesRun {
     public static List<Thing> findAll(SessionFactory sf) {
         Session session = sf.openSession();
         session.beginTransaction();
-        List result = session.createQuery("from ru.job4j.course.hibernate.toone.Thing").list();
+        List result = session.createQuery("from ru.job4j.course.hibernate.mapping.Thing").list();
         session.getTransaction().commit();
         session.close();
         return result;

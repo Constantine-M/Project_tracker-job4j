@@ -1,4 +1,4 @@
-package ru.job4j.course.hibernate.toone;
+package ru.job4j.course.hibernate.mapping;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
