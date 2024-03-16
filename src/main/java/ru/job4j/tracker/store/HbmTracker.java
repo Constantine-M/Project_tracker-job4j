@@ -11,6 +11,7 @@ import ru.job4j.tracker.model.Item;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Данный класс описывает реализацию
@@ -101,8 +102,8 @@ public class HbmTracker implements Store, AutoCloseable {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
-            Query<Item> query = session.createQuery(
-                    "DELETE Item as item WHERE item.id = :fId", Item.class)
+            Query query = session.createQuery(
+                    "DELETE Item as item WHERE item.id = :fId")
                     .setParameter("fId", id);
             affectedRows = query.executeUpdate();
             session.getTransaction().commit();
@@ -143,14 +144,25 @@ public class HbmTracker implements Store, AutoCloseable {
         }
     }
 
+    /**
+     * Найти элемент по ID.
+     *
+     * {@link Query#uniqueResult()} не выбрасывает
+     * исключение. Если элемента нет, то получаем null.
+     */
     @Override
     public Item findById(int id) {
-        try (Session session = sessionFactory.openSession()) {
+        Session session = sessionFactory.openSession();
+        try (session) {
             session.beginTransaction();
             Query<Item> query = session.createQuery("FROM Item item WHERE item.id = :fId", Item.class)
                     .setParameter("fId", id);
             session.getTransaction().commit();
-            return query.uniqueResult();
+            Item result = query.uniqueResult();
+            if (result != null) {
+                return result;
+            }
+            throw new NoSuchElementException();
         }
     }
 
