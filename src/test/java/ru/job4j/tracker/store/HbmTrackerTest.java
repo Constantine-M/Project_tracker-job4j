@@ -26,7 +26,7 @@ public class HbmTrackerTest {
 
     @Before
     public void truncate() {
-        try(var session = sessionFactory.openSession()) {
+        try (var session = sessionFactory.openSession()) {
             session.beginTransaction();
             String query = "truncate table items restart identity";
             session.createNativeQuery(query).executeUpdate();

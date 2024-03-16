@@ -57,7 +57,7 @@ public class SqlTrackerTest {
      *
      * @throws SQLException
      */
-    @After
+    @Before
     public void wipeTable() throws SQLException {
         try (PreparedStatement ps = connection.prepareStatement("TRUNCATE TABLE items  RESTART IDENTITY")) {
             ps.execute();
